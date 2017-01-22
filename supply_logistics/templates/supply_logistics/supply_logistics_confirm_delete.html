@@ -1,0 +1,27 @@
+{% extends "frontend/base/navigation.html" %}
+{% load crispy_forms_tags %}
+
+{% block body_content %}
+
+	<ol class="breadcrumb-arrows">
+	<li><a href="{% url 'frontend:dashboard' %}">Home</a></li>
+		<li><a href="{% url 'supply_logistics:supply_logistics' %}">Supply Logistics</a></li>
+		<li><a href="#">Item Confirm Delete</a></li>
+	</ol>
+
+	<div class="container">
+		<div class="page-header">
+			<h3>Confirm Delete Item<br></h3>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-12">
+			<form action="" method="post">{% csrf_token %}
+					<p>Are you sure you want to delete the item {{ object.item }}? This action cannot be undone. </p>
+					<input type="submit" value="Confirm" />
+			</form>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

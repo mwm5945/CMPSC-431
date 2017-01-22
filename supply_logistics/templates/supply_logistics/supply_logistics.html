@@ -1,0 +1,83 @@
+{% extends "frontend/base/navigation.html" %}
+{% load staticfiles %}
+{% load guardian_tags %}
+
+{% block body_content %}
+
+    <ol class="breadcrumb-arrows">
+        <li><a href="{% url 'frontend:dashboard' %}">Home</a></li>
+        <li><a href="#">Supply Logistics</a></li>
+    </ol>
+
+    <div class="container center-container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-header">
+                    <h3>Supply Logistics</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container center-container">
+        <div class="row d-flex">
+
+            <!-- All Users can access this page -->
+            {% if perms.supply_logistics.change_inventory %}
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <a href="{% url 'frontend:redirect' page='supplies' %}" class="a-flex">
+                        <div class="testimonial-card z-depth-1 hoverable">
+                            <div class="card-up green lighten-2"></div>
+                            <div class="avatar"><img src="{% static 'img/thumbnails/default.png' %}"
+                                                     class="img-circle img-responsive"></div>
+                            <div class="card-content">
+                                <h5>Supply Logistics Requests</h5>
+                                <p>
+                                    View and submit Supply Logistics requests on legacy THINK.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+
+{#            {% if perms.supply_logistics.can_manage_donor_registry %}#}
+{#            <div class="col-md-4 col-sm-6 d-flex">#}
+{#                <a href="{% url 'supply_logistics:registry-admin-home' %}" class="a-flex">#}
+{#                    <div class="testimonial-card z-depth-1 hoverable">#}
+{#                        <div class="card-up green lighten-2"></div>#}
+{#                        <div class="avatar"><img src="{% static 'img/thumbnails/default.png' %}"#}
+{#                                                 class="img-circle img-responsive"></div>#}
+{#                        <div class="card-content">#}
+{#                            <h5>Donor Registry Management</h5>#}
+{#                            <p>#}
+{#                                Add, remove, and edit items that appear on the Donor Registry on external THINK.#}
+{#                            </p>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </a>#}
+{#            </div>#}
+{#            {% endif %}#}
+            {% if perms.supply_logistics.can_move_merchandise_inventory %}
+                <div class="col-md-4 col-sm-6 d-flex">
+                    <a href="{% url 'supply_logistics:merch-inventory-home' %}" class="a-flex">
+                        <div class="testimonial-card z-depth-1 hoverable">
+                            <div class="card-up pink lighten-2"></div>
+                            <div class="avatar"><img src="{% static 'img/thumbnails/default.png' %}"
+                                                     class="img-circle img-responsive"></div>
+                            <div class="card-content">
+                                <h5>Merchandise Inventory Management</h5>
+                                <p>
+                                    Move inventory from any of the storage locations to any of the stores in the BJC.
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            {% endif %}
+
+        </div>
+    </div>
+    <br><br>
+
+{% endblock %}

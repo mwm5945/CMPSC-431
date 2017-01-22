@@ -1,0 +1,96 @@
+{% extends "frontend/base/navigation.html" %}
+{% load staticfiles %}
+{% load guardian_tags %}
+
+{% block body_content %}
+
+    <ol class="breadcrumb-arrows">
+        <li><a href="{% url 'frontend:dashboard' %}">Home</a></li>
+        <li><a href="{% url 'supply_logistics:supply_logistics' %}">Supply Logistics</a></li>
+        <li><a href="#">Merchandise Inventory System</a></li>
+    </ol>
+
+    <div class="container center-container">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="page-header">
+                    <h3>Merchandise Inventory System</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container center-container">
+        <div class="row d-flex">
+
+            <div class="col-md-4 col-sm-6 d-flex">
+                <a href="{% url 'supply_logistics:merch-inventory-add' %}" class="a-flex">
+                    <div class="testimonial-card z-depth-1 hoverable">
+                        <div class="card-up pink lighten-2"></div>
+                        <div class="avatar"><img src="{% static 'img/thumbnails/default.png' %}"
+                                                 class="img-circle img-responsive"></div>
+                        <div class="card-content">
+                            <h5>Add Item to Inventory</h5>
+                            <p>
+                                Submit new items to the Merchandise Inventory System when new items come in for sale.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6 d-flex">
+                <a href="{% url 'supply_logistics:merch-inventory-add' %}" class="a-flex">
+                    <div class="testimonial-card z-depth-1 hoverable">
+                        <div class="card-up pink lighten-2"></div>
+                        <div class="avatar"><img src="{% static 'img/thumbnails/default.png' %}"
+                                                 class="img-circle img-responsive"></div>
+                        <div class="card-content">
+                            <h5>List Current Overall Inventory</h5>
+                            <p>
+                                View the inventory of all items across all locations.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-md-4 col-sm-6 d-flex">
+                <a href="{% url 'supply_logistics:merch-inventory-add' %}" class="a-flex">
+                    <div class="testimonial-card z-depth-1 hoverable">
+                        <div class="card-up pink lighten-2"></div>
+                        <div class="avatar"><img src="{% static 'img/thumbnails/default.png' %}"
+                                                 class="img-circle img-responsive"></div>
+                        <div class="card-content">
+                            <h5>List Current Inventory For Each Location</h5>
+                            <p>
+                                View the inventory of any items at each location.
+                            </p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {##}
+            {#            {% if perms.supply_logistics.can_move_merchandise_inventory %}#}
+            {#                <div class="col-md-4 col-sm-6 d-flex">#}
+            {#                    <a href="{% url 'supply_logistics:supply_logistics' %}" class="a-flex">#}
+            {#                        <div class="testimonial-card z-depth-1 hoverable">#}
+            {#                            <div class="card-up green lighten-2"></div>#}
+            {#                            <div class="avatar"><img src="{% static 'img/thumbnails/default.png' %}"#}
+            {#                                                     class="img-circle img-responsive"></div>#}
+            {#                            <div class="card-content">#}
+            {#                                <h5>Merchandise Inventory Management</h5>#}
+            {#                                <p>#}
+            {#                                    Move inventory from any of the storage locations to any of the stores in the BJC.#}
+            {#                                </p>#}
+            {#                            </div>#}
+            {#                        </div>#}
+            {#                    </a>#}
+            {#                </div>#}
+            {#            {% endif %}#}
+
+        </div>
+    </div>
+    <br><br>
+
+{% endblock %}
