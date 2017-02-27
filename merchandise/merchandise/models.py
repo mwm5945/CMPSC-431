@@ -5,8 +5,8 @@ class ItemCategory(Model):
     """Item category."""
 
     # id included
-    name = models.models.CharField(max_length=255)
-    parent_category = models.models.ForeignKey('ItemCategory', on_delete=CASCADE)
+    name = models.CharField(max_length=255)
+    parent_category = models.ForeignKey('ItemCategory', on_delete=CASCADE)
 
 class Item(Model):
     """Merchandise inventory."""
@@ -19,23 +19,23 @@ class Item(Model):
     )
 
     #id automatically included
-    sku = models.models.SmallIntegerField(null=False, blank=False)
-    name = models.models.CharField(max_length=255)
-    price = models.models.DecimalField(max_digits=10, decimal_places=2)
-    is_active = models.models.BooleanField(required=)
-    description = models.models.TextField(blank=True, null=True)
-    size = models.models.CharField(max_length=11, null=True, blank=True, choices=MERCH_INVENTORY_SIZES)
-    category = models.models.ForeignKey('ItemCategory', on_delete=SET_NULL)
+    sku = models.SmallIntegerField(null=False, blank=False)
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    is_active = models.BooleanField(required=)
+    description = models.TextField(blank=True, null=True)
+    size = models.CharField(max_length=11, null=True, blank=True, choices=MERCH_INVENTORY_SIZES)
+    category = models.ForeignKey('ItemCategory', on_delete=SET_NULL)
 
 
 class Address(Model):
     """Address."""
 
-    line_one = models.models.CharField(max_length=255)
-    line_two = models.models.CharField(max_lenght=255)
-    city = models.models.CharField(max_length=255)
-    state = models.models.CharField(max_length=2)
-    zip = models.models.SmallIntegerField()
+    line_one = models.CharField(max_length=255)
+    line_two = models.CharField(max_lenght=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=2)
+    zip = models.SmallIntegerField()
 
 
 class Sale(Model):
