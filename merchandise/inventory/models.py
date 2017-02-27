@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Inventory(Model):
+class Inventory(models.Model):
     """Inventory of a certain item."""
 
     quantity = models.IntegerField()

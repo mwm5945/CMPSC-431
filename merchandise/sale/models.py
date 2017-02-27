@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Sale(Model):
+class Sale(models.Model):
     """Individual item sale."""
 
     # id inluded
@@ -10,15 +10,15 @@ class Sale(Model):
     transaction = models.ForeignKey('Transaction')
 
 
-class Transaction(Model):
+class Transaction(models.Model):
     """Complete transaction for a customer."""
 
-    TRANSACTION_STATUS = models.(
+    TRANSACTION_STATUS = (
         ('Paid', 'Paid'),
         ('Returned', 'Returned')
     )
 
-    TRANSACTION_TYPE = models.(
+    TRANSACTION_TYPE = (
         ('Online', 'Online'),
         ('In Store', 'In Store'),
         ('Other', 'Other')

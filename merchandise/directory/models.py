@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Address(Model):
+class Address(models.Model):
     """Address."""
 
     line_one = models.CharField(max_length=255)
@@ -11,7 +11,7 @@ class Address(Model):
     zip = models.SmallIntegerField()
 
 
-class Customer(Model):
+class Customer(models.Model):
     """Merchandise customers."""
 
     # id included
@@ -19,7 +19,7 @@ class Customer(Model):
     address = models.ForeignKey('Address', null=True, blank=True)
 
 
-class Supplier(Model):
+class Supplier(models.Model):
     """Merchandise supplier."""
 
     phone = models.CharField(max_length=10)
@@ -27,7 +27,7 @@ class Supplier(Model):
     address = models.ForeignKey('Address')
 
 
-class User(Model):
+class User(models.Model):
     """Merchandise user."""
 
     name = models.CharField(max_length=255)

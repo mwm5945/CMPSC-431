@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class Item(Model):
+class Item(models.Model):
     """Merchandise inventory."""
 
     MERCH_INVENTORY_SIZES = models.(
@@ -20,7 +20,7 @@ class Item(Model):
     category = models.ForeignKey('ItemCategory', on_delete=SET_NULL)
 
 
-class ItemCategory(Model):
+class ItemCategory(models.Model):
     """Item category."""
 
     # id included
