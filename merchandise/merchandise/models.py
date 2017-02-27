@@ -1,94 +1,90 @@
-# NEED TO CREATE SETTINGS AND UPDATE FILE STRUCTURE! ALL OF THESE MODELS WILL LIKELY BE IN SEPARATE FOLDERS
-
-# from django.db.models import (BooleanField, CASCADE, CharField, DateField, DateTimeField, DecimalField, EmailField,
-#                               ForeignKey, IntegerField, Model, PositiveSmallIntegerField, SET_NULL, SmallIntegerField,
-#                               TextField)
-
-MERCH_INVENTORY_SIZES = (
-    ('S', 'Small'),
-    ('M', 'Medium'),
-    ('L', 'Large'),
-    ('XL', 'Extra Large')
-)
-
-TRANSACTION_STATUS = (
-    ('Paid', 'Paid'),
-    ('Returned', 'Returned')
-
-)
-
-TRANSACTION_TYPE = (
-    ('Online', 'Online'),
-    ('In Store', 'In Store'),
-    ('Other', 'Other')
-)
-
-ORDER_STATUS = (
-    ('Ordered', 'Ordered'),
-    ('In Transit', 'In Transit'),
-    ('Arrived', 'Arrived'),
-    ('Moved to Storage', 'Moved to Storage')
-)
+from django.db import models
 
 
 class ItemCategory(Model):
     """Item category."""
 
     # id included
-    name = CharField(max_length=255)
-    parent_category = ForeignKey('ItemCategory', on_delete=CASCADE)
+    name = models.models.CharField(max_length=255)
+    parent_category = models.models.ForeignKey('ItemCategory', on_delete=CASCADE)
 
 class Item(Model):
     """Merchandise inventory."""
 
+    MERCH_INVENTORY_SIZES = (
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large')
+    )
+
     #id automatically included
-    sku = SmallIntegerField(null=False, blank=False)
-    name = CharField(max_length=255)
-    price = DecimalField(max_digits=10, decimal_places=2)
-    is_active = BooleanField(required=)
-    description = TextField(blank=True, null=True)
-    size = CharField(max_length=11, null=True, blank=True, choices=MERCH_INVENTORY_SIZES)
-    category = ForeignKey('ItemCategory', on_delete=SET_NULL)
+    sku = models.models.SmallIntegerField(null=False, blank=False)
+    name = models.models.CharField(max_length=255)
+    price = models.models.DecimalField(max_digits=10, decimal_places=2)
+    is_active = models.models.BooleanField(required=)
+    description = models.models.TextField(blank=True, null=True)
+    size = models.models.CharField(max_length=11, null=True, blank=True, choices=MERCH_INVENTORY_SIZES)
+    category = models.models.ForeignKey('ItemCategory', on_delete=SET_NULL)
 
 
 class Address(Model):
     """Address."""
 
-    line_one = CharField(max_length=255)
-    line_two = CharField(max_lenght=255)
-    city = CharField(max_length=255)
-    state = CharField(max_length=2)
-    zip = SmallIntegerField()
+    line_one = models.models.CharField(max_length=255)
+    line_two = models.models.CharField(max_lenght=255)
+    city = models.models.CharField(max_length=255)
+    state = models.models.CharField(max_length=2)
+    zip = models.models.SmallIntegerField()
 
 
 class Sale(Model):
     """Individual item sale."""
 
     # id inluded
-    price = DecimalField(max_digits=10, decimal_places=2)
-    item = ForeignKey('Item')
-    transaction = ForeignKey('Transaction')
+    price = models.DecimalField(max_digits=10, decimal_places=2)
+    item = models.ForeignKey('Item')
+    transaction = models.ForeignKey('Transaction')
 
 
 class Transaction(Model):
     """Complete transaction for a customer."""
 
+    TRANSACTION_STATUS = (
+        ('Paid', 'Paid'),
+        ('Returned', 'Returned')
+
+    )
+
+    TRANSACTION_TYPE = (
+        ('Online', 'Online'),
+        ('In Store', 'In Store'),
+        ('Other', 'Other')
+    )
+
     # id included
-    status = CharField(max_length=10, null=False, blank=False, choices=TRANSACTION_STATUS)
-    transaction_type = CharField(max_length=10, null=False, blank=False, choices=TRANSACTION_TYPE)
-    date_time = DateTimeField(auto_now=True)
-    customer = ForeignKey('Customer')
-    completed_by = ForeignKey('ThinkUser')
+    status = models.CharField(max_length=10, null=False, blank=False, choices=TRANSACTION_STATUS)
+    transaction_type = models.CharField(max_length=10, null=False, blank=False, choices=TRANSACTION_TYPE)
+    date_time = models.DateTimeField(auto_now=True)
+    customer = models.ForeignKey('Customer')
+    completed_by = models.ForeignKey('ThinkUser')
 
 
 
 class Order(Model):
     """Merchandise order to restock inventory."""
 
-    status = CharField(max_length=10, choices=ORDER_STATUS)
-    date = DateTimeField(auto_now=True)
-    supplier = ForeignKey('Supplier', on_delete=SET_NULL)
-    processed_by = ForeignKey('ThinkUser', on_delete=SET_NULL)
+    ORDER_STATUS = (
+        ('Ordered', 'Ordered'),
+        ('In Transit', 'In Transit'),
+        ('Arrived', 'Arrived'),
+        ('Moved to Storage', 'Moved to Storage')
+    )
+
+    status = models.CharField(max_length=10, choices=ORDER_STATUS)
+    date = models.DateTimeField(auto_now=True)
+    supplier = models.ForeignKey('Supplier', on_delete=SET_NULL)
+    processed_by = models.ForeignKey('ThinkUser', on_delete=SET_NULL)
 
 
 # class InventoryMovement(Model):
@@ -100,48 +96,48 @@ class Inventory(Model):
     """Inventory of a certain item."""
 
     # id included
-    quantity = IntegerField()
-    item = ForeignKey('Item')
-    location = ForeignKey('InventoryLocation')
+    quantity = models.IntegerField()
+    item = models.ForeignKey('Item')
+    location = models.ForeignKey('InventoryLocation')
 
 
 class InventoryLocation(Model):
     """Locations for merchandise inventory."""
 
     # id included
-    name = CharField(max_length=255)
-    address = ForeignKey('Address')
+    name = models.CharField(max_length=255)
+    address = models.ForeignKey('Address')
 
 
 class Supplier(Model):
     """Merchandise supplier."""
 
-    phone = CharField(max_length=10)
-    name = CharField(max_length=255)
-    address = ForeignKey('Address')
+    phone = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
+    address = models.ForeignKey('Address')
 
 
 class Customer(Model):
     """Merchandise customers."""
 
     # id included
-    email = EmailField()
-    address = ForeignKey('Address', null=True, blank=True)
+    email = models.EmailField()
+    address = models.ForeignKey('Address', null=True, blank=True)
 
 
 class ThinkUser(Model):
     """Merchandise user."""
 
-    name = CharField(max_length=255)
-    username = CharField(max_length=255)
-    password = CharField(max_lenght=255)
-    email = EmailField()
+    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_lenght=255)
+    email = models.EmailField()
 
 
 class Shift(Model):
     """Merch employee shift."""
 
-    start_time = DateTimeField()
-    end_time = DateTimeField()
-    scheduled_employee = ForeignKey('ThinkUser', on_delete=SET_NULL)
-    location = ForeignKey('InventoryLocation', on_delete=CASCADE)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    scheduled_employee = models.ForeignKey('ThinkUser', on_delete=SET_NULL)
+    location = models.ForeignKey('InventoryLocation', on_delete=CASCADE)
