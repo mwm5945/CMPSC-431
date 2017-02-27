@@ -1,4 +1,6 @@
-from django.db.models import Model
+from django.db import models
+
+
 
 class Location(Model):
     """Locations for merchandise inventory."""

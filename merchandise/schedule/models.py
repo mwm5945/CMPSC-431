@@ -1,10 +1,11 @@
-from diango.db.models import Model
+from django.db import models
+
 
 
 class Shift(Model):
     """Merch employee shift."""
 
-    start_time = DateTimeField()
-    end_time = DateTimeField()
-    scheduled_employee = ForeignKey('ThinkUser', on_delete=SET_NULL)
-    location = ForeignKey('InventoryLocation', on_delete=CASCADE)
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField()
+    scheduled_employee = models.ForeignKey('ThinkUser', on_delete=SET_NULL)
+    location = models.ForeignKey('InventoryLocation', on_delete=CASCADE)

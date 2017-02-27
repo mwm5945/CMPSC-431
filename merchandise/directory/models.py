@@ -1,36 +1,36 @@
-from django.db.models import Model
+from django.db import models
 
 
 class Address(Model):
     """Address."""
 
-    line_one = CharField(max_length=255)
-    line_two = CharField(max_lenght=255)
-    city = CharField(max_length=255)
-    state = CharField(max_length=2)
-    zip = SmallIntegerField()
+    line_one = models.CharField(max_length=255)
+    line_two = models.CharField(max_lenght=255)
+    city = models.CharField(max_length=255)
+    state = models.CharField(max_length=2)
+    zip = models.SmallIntegerField()
 
 
 class Customer(Model):
     """Merchandise customers."""
 
     # id included
-    email = EmailField()
-    address = ForeignKey('Address', null=True, blank=True)
+    email = models.EmailField()
+    address = models.ForeignKey('Address', null=True, blank=True)
 
 
 class Supplier(Model):
     """Merchandise supplier."""
 
-    phone = CharField(max_length=10)
-    name = CharField(max_length=255)
-    address = ForeignKey('Address')
+    phone = models.CharField(max_length=10)
+    name = models.CharField(max_length=255)
+    address = models.ForeignKey('Address')
 
 
 class User(Model):
     """Merchandise user."""
 
-    name = CharField(max_length=255)
-    username = CharField(max_length=255)
-    password = CharField(max_lenght=255)
-    email = EmailField()
+    name = models.CharField(max_length=255)
+    username = models.CharField(max_length=255)
+    password = models.CharField(max_lenght=255)
+    email = models.EmailField()

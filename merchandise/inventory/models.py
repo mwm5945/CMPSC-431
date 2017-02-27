@@ -1,8 +1,8 @@
-from django.db.models import Model
+from django.db import models
 
 class Inventory(Model):
     """Inventory of a certain item."""
 
-    quantity = IntegerField()
-    item = ForeignKey('Item')
-    location = ForeignKey('InventoryLocation')
+    quantity = models.IntegerField()
+    item = models.ForeignKey('Item')
+    location = models.ForeignKey('InventoryLocation')
