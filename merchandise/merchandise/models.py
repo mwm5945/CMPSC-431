@@ -51,6 +51,16 @@ class Item(Model):
     category = ForeignKey('ItemCategory', on_delete=SET_NULL)
 
 
+class Address(Model):
+    """Address."""
+
+    line_one = CharField(max_length=255)
+    line_two = CharField(max_lenght=255)
+    city = CharField(max_length=255)
+    state = CharField(max_length=2)
+    zip = SmallIntegerField()
+
+
 class Sale(Model):
     """Individual item sale."""
 
@@ -100,11 +110,7 @@ class InventoryLocation(Model):
 
     # id included
     name = CharField(max_length=255)
-    address_line_one = CharField(max_length=255)
-    address_line_two = CharField(max_length=255, blank=True, null=True)
-    address_city = CharField(max_length=255)
-    address_state = CharField(max_length=2)
-    address_zip = SmallIntegerField(max_length=5)
+    address = ForeignKey('Address')
 
 
 class Supplier(Model):
@@ -112,11 +118,7 @@ class Supplier(Model):
 
     phone = CharField(max_length=10)
     name = CharField(max_length=255)
-    address_line_one = CharField(max_length=255)
-    address_line_two = CharField(max_length=255, blank=True, null=True)
-    address_city = CharField(max_length=255)
-    address_state = CharField(max_length=2)
-    address_zip = SmallIntegerField(max_length=5)
+    address = ForeignKey('Address')
 
 
 class Customer(Model):
@@ -124,6 +126,7 @@ class Customer(Model):
 
     # id included
     email = EmailField()
+    address = ForeignKey('Address', null=True, blank=True)
 
 
 class ThinkUser(Model):
