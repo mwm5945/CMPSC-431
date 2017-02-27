@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Inventory(Model):
     """Inventory of a certain item."""
 

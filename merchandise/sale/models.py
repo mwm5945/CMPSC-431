@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Sale(Model):
     """Individual item sale."""
 

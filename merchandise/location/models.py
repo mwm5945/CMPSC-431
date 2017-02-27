@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class Location(Model):
     """Locations for merchandise inventory."""
 
