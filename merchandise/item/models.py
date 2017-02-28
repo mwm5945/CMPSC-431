@@ -22,7 +22,7 @@ class Item(models.Model):
     price = models.DecimalField(max_digits=10, decimal_places=2)
     is_active = models.BooleanField(default=False)
     size = models.CharField(max_length=2, null=True, blank=True, choices=SIZE_CHOICES)
-    category = models.ForeignKey('item.ItemCategory', on_delete=SET_NULL, null=True, blank=True)
+    category = models.ForeignKey('item.ItemCategory', null=True, blank=True, on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = 'Item'
@@ -33,7 +33,7 @@ class ItemCategory(models.Model):
     """Item category."""
 
     name = models.CharField(max_length=255)
-    parent = models.ForeignKey('item.ItemCategory', on_delete=CASCADE, null=True, blank=True)
+    parent = models.ForeignKey('item.ItemCategory', null=True, blank=True, on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Item Category'

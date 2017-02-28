@@ -37,6 +37,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'directory',
+    'inventory',
+    'item',
+    'location',
+    'sale',
+    'schedule',
+    'supply'
 ]
 
 MIDDLEWARE = [
@@ -82,6 +89,10 @@ DATABASES = {
         'HOST': os.getenv('DB_HOST', 'localhost'),
     }
 }
+
+
+# Model used for authentication
+AUTH_USER_MODEL = 'directory.MerchandiseUser'
 
 
 # Password validation

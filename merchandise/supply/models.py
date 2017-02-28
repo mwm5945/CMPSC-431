@@ -17,11 +17,11 @@ class Order(models.Model):
     )
 
     status = models.CharField(max_length=1, choices=ORDER_STATUS, default=ORDERED)
-    supplier = models.ForeignKey('directory.Supplier', on_delete=models.SET_NULL)
+    supplier = models.ForeignKey('directory.Supplier', null=True, blank=True, on_delete=models.SET_NULL)
     timestamp = models.DateTimeField(auto_now_add=True)
-    entered_by = models.ForeignKey('directory.MerchandiseUser', on_delete=models.SET_NULL, related_name='order_entered_by')
+    entered_by = models.ForeignKey('directory.MerchandiseUser', null=True, blank=True, on_delete=models.SET_NULL, related_name='order_entered_by')
     last_updated = models.DateTimeField(auto_now=True)
-    last_updated_by = models.ForeignKey('directory.MerchandiseUser', on_delete=models.SET_NULL, related_name='order_last_updated_by')
+    last_updated_by = models.ForeignKey('directory.MerchandiseUser', null=True, blank=True, on_delete=models.SET_NULL, related_name='order_last_updated_by')
 
     class Meta:
         verbose_name = 'Order'

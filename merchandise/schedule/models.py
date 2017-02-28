@@ -6,7 +6,7 @@ class Shift(models.Model):
 
     start_time = models.DateTimeField()
     end_time = models.DateTimeField()
-    scheduled_employee = models.ForeignKey('directory.MerchandiseUser', on_delete=models.SET_NULL, null=True, blank=True)
+    scheduled_employee = models.ForeignKey('directory.MerchandiseUser', null=True, blank=True, on_delete=models.SET_NULL)
     location = models.ForeignKey('location.Location', on_delete=models.CASCADE)
 
     class Meta:

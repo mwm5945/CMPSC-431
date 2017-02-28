@@ -6,7 +6,7 @@ class Address(models.Model):
     """Address."""
 
     line_one = models.CharField(max_length=255)
-    line_two = models.CharField(max_lenght=255, null=True, blank=True)
+    line_two = models.CharField(max_length=255, null=True, blank=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2)
     zip = models.SmallIntegerField()
@@ -32,7 +32,7 @@ class Supplier(models.Model):
 
     phone = models.CharField(max_length=10)
     name = models.CharField(max_length=255)
-    address = models.ForeignKey('directory.Address', on_delete=models.SET_NULL)
+    address = models.ForeignKey('directory.Address', null=True, blank=True, on_delete=models.SET_NULL)
     is_active = models.BooleanField(default=False)
 
     class Meta:
