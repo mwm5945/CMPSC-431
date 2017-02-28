@@ -1,3 +1,11 @@
 from django.contrib import admin
+from location.models import Location
 
-# Register your models here.
+
+class LocationAdmin(admin.ModelAdmin):
+    """Admin for Location model."""
+
+    list_display = ['id', 'name', 'address', 'is_active']
+
+
+admin.site.register(Location, LocationAdmin)
