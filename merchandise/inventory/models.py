@@ -11,6 +11,7 @@ class Inventory(models.Model):
     class Meta:
         verbose_name = 'Inventory'
         verbose_name_plural = 'Inventories'
+        unique_together = ('item', 'location')
 
 
 class InventoryTransaction(models.Model):

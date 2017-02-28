@@ -45,4 +45,8 @@ class Migration(migrations.Migration):
                 'verbose_name_plural': 'Inventory Transactions',
             },
         ),
+        migrations.AlterUniqueTogether(
+            name='inventory',
+            unique_together=set([('item', 'location')]),
+        ),
     ]
