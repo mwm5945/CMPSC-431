@@ -1,22 +1,30 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class Address(models.Model):
     """Address."""
 
     line_one = models.CharField(max_length=255)
-    line_two = models.CharField(max_lenght=255)
+    line_two = models.CharField(max_lenght=255, null=True, blank=True)
     city = models.CharField(max_length=255)
     state = models.CharField(max_length=2)
     zip = models.SmallIntegerField()
+
+    class Meta:
+        verbose_name = 'Address'
+        verbose_name_plural = 'Addresses'
 
 
 class Customer(models.Model):
     """Merchandise customers."""
 
-    # id included
     email = models.EmailField()
-    address = models.ForeignKey('Address', null=True, blank=True)
+    address = models.ForeignKey('directory.Address', null=True, blank=True, on_delete=models.SET_NULL)
+
+    class Meta:
+        verbose_name = 'Customer'
+        verbose_name_plural = 'Customers'
 
 
 class Supplier(models.Model):
@@ -24,13 +32,17 @@ class Supplier(models.Model):
 
     phone = models.CharField(max_length=10)
     name = models.CharField(max_length=255)
-    address = models.ForeignKey('Address')
+    address = models.ForeignKey('directory.Address', on_delete=models.SET_NULL)
+    is_active = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Supplier'
+        verbose_name_plural = 'Suppliers'
 
 
-class User(models.Model):
+class MerchandiseUser(AbstractUser):
     """Merchandise user."""
-
-    name = models.CharField(max_length=255)
-    username = models.CharField(max_length=255)
-    password = models.CharField(max_lenght=255)
-    email = models.EmailField()
+    
+    class Meta:
+        verbose_name = 'Merchandise User'
+        verbose_name_plural = 'Merchandise Users'

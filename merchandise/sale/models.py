@@ -4,29 +4,43 @@ from django.db import models
 class Sale(models.Model):
     """Individual item sale."""
 
-    # id inluded
+    PAID = 'P'
+    RETURNED = 'R'
+
+    STATUS_CHOICES = (
+        (PAID, 'Paid'),
+        (RETURNED, 'Returned')
+    )
+
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    item = models.ForeignKey('Item')
-    transaction = models.ForeignKey('Transaction')
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES)
+    item = models.ForeignKey('item.Item', on_delete=models.SET_NULL)
+    transaction = models.ForeignKey('sale.Transaction', on_delete=models.CASCADE)
+    inventory_transaction = models.ForeignKey('inventory.InventoryTransaction', on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Sale'
+        verbose_name_plural = 'Sales'
 
 
 class Transaction(models.Model):
     """Complete transaction for a customer."""
 
-    TRANSACTION_STATUS = (
-        ('Paid', 'Paid'),
-        ('Returned', 'Returned')
+    ONLINE = 'O'
+    STORE = 'S'
+    OTHER = 'X'
+
+    TRANSACTION_TYPE_CHOICES = (
+        (ONLINE, 'Online'),
+        (STORE, 'In Store'),
+        (OTHER, 'Other')
     )
 
-    TRANSACTION_TYPE = (
-        ('Online', 'Online'),
-        ('In Store', 'In Store'),
-        ('Other', 'Other')
-    )
+    transaction_type = models.CharField(max_length=1, choices=TRANSACTION_TYPE_CHOICES)
+    timestamp = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey('directory.Customer', null=True, blank=True, on_delete=models.SET_NULL)
+    completed_by = models.ForeignKey('directory.MerchandiseUser', on_delete=models.SET_NULL)
 
-    # id included
-    status = models.CharField(max_length=10, null=False, blank=False, choices=TRANSACTION_STATUS)
-    transaction_type = models.CharField(max_length=10, null=False, blank=False, choices=TRANSACTION_TYPE)
-    date_time = models.DateTimeField(auto_now=True)
-    customer = models.ForeignKey('Customer')
-    completed_by = models.ForeignKey('ThinkUser')
+    class Meta:
+        verbose_name = 'Transaction'
+        verbose_name_plural = 'Transactions'

@@ -4,25 +4,37 @@ from django.db import models
 class Item(models.Model):
     """Merchandise inventory."""
 
-    MERCH_INVENTORY_SIZES = models.(
-        ('S', 'Small'),
-        ('M', 'Medium'),
-        ('L', 'Large'),
-        ('XL', 'Extra Large')
+    SMALL = 'S'
+    MEDIUM = 'M'
+    LARGE = 'L'
+    EXTRA_LARGE = 'XL'
+
+    SIZE_CHOICES = (
+        (SMALL, 'Small'),
+        (MEDIUM, 'Medium'),
+        (LARGE, 'Large'),
+        (EXTRA_LARGE, 'Extra Large')
     )
 
-    sku = models.SmallIntegerField(null=False, blank=False)
     name = models.CharField(max_length=255)
+    description = models.TextField(default='')
+    sku = models.SmallIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    is_active = models.BooleanField(required=)
-    description = models.TextField(blank=True, null=True)
-    size = models.CharField(max_length=11, null=True, blank=True, choices=MERCH_INVENTORY_SIZES)
-    category = models.ForeignKey('ItemCategory', on_delete=SET_NULL)
+    is_active = models.BooleanField(default=False)
+    size = models.CharField(max_length=2, null=True, blank=True, choices=SIZE_CHOICES)
+    category = models.ForeignKey('item.ItemCategory', on_delete=SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Item'
+        verbose_name_plural = 'Items'
 
 
 class ItemCategory(models.Model):
     """Item category."""
 
-    # id included
     name = models.CharField(max_length=255)
-    parent_category = models.ForeignKey('ItemCategory', on_delete=CASCADE)
+    parent = models.ForeignKey('item.ItemCategory', on_delete=CASCADE, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'Item Category'
+        verbose_name_plural = 'Item Categories'
