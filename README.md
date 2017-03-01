@@ -36,6 +36,10 @@ THON Inventory System
 
   mysql> create database inventory
   
+5. Install requirements
+
+   $ pip install -r requirements.txt
+  
   
 
 
