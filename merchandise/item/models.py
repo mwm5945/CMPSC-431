@@ -7,13 +7,25 @@ class Item(models.Model):
     SMALL = 'S'
     MEDIUM = 'M'
     LARGE = 'L'
-    EXTRA_LARGE = 'XL'
+    XL = 'XL'
+    XXL = '2X'
+    XXXL = '3X'
+    XXXXL = '4X'
+    YOUTH_SMALL = 'YS'
+    YOUTH_MEDIUM = 'YM'
+    YOUTH_LARGE = 'YL'
 
     SIZE_CHOICES = (
         (SMALL, 'Small'),
         (MEDIUM, 'Medium'),
         (LARGE, 'Large'),
-        (EXTRA_LARGE, 'Extra Large')
+        (XL, 'XL'),
+        (XXL, 'XXL'),
+        (XXXL, 'XXXL'),
+        (XXXXL, 'XXXXL'),
+        (YOUTH_SMALL, 'Youth Small'),
+        (YOUTH_MEDIUM, 'Youth Medium'),
+        (YOUTH_LARGE, 'Youth Large')
     )
 
     name = models.CharField(max_length=255)

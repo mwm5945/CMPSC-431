@@ -23,7 +23,7 @@ class Migration(migrations.Migration):
                 ('sku', models.SmallIntegerField()),
                 ('price', models.DecimalField(decimal_places=2, max_digits=10)),
                 ('is_active', models.BooleanField(default=False)),
-                ('size', models.CharField(blank=True, choices=[('S', 'Small'), ('M', 'Medium'), ('L', 'Large'), ('XL', 'Extra Large')], max_length=2, null=True)),
+                ('size', models.CharField(blank=True, choices=[('S', 'Small'), ('M', 'Medium'), ('L', 'Large'), ('XL', 'XL'), ('2X', 'XXL'), ('3X', 'XXXL'), ('4X', 'XXXXL'), ('YS', 'Youth Small'), ('YM', 'Youth Medium'), ('YL', 'Youth Large')], max_length=2, null=True)),
             ],
             options={
                 'verbose_name': 'Item',
