@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Inventory(models.Model):
@@ -12,7 +13,7 @@ class Inventory(models.Model):
         verbose_name = 'Inventory'
         verbose_name_plural = 'Inventories'
         unique_together = ('item', 'location')
-
+        
 
 class InventoryTransaction(models.Model):
     """Change in inventory."""
@@ -25,3 +26,38 @@ class InventoryTransaction(models.Model):
     class Meta:
         verbose_name = 'Inventory Transaction'
         verbose_name_plural = 'Inventory Transactions'
+
+    @staticmethod
+    def add_to_inventory(item, location, quantity, user=None):
+        """Adds the specified quantity to inventory at the given location."""
+
+        try:
+            inventory = Inventory.objects.get(item=item, location=location)
+            inventory.quantity += quantity
+            inventory.save()
+        except ObjectDoesNotExist:
+            inventory = Inventory.objects.create(item=item, location=location, quantity=quantity)
+
+        transaction = InventoryTransaction.objects.create(inventory=inventory, quantity=quantity, user=user)
+
+        return transaction
+    
+    @staticmethod
+    def remove_from_inventory(item, location, quantity, user=None):
+        """Removes the specified quantity from inventory at the given location."""
+
+        quantity = -quantity
+
+        return InventoryTransaction.add_to_inventory(item=item, location=location, quantity=quantity, user=user)
+
+    @staticmethod
+    def move_inventory(item, from_location, to_location, quantity, user=None):
+        """Moves the number of items in inventory from one location to another."""
+
+        remove_from = InventoryTransaction.remove_from_inventory(
+                        item=item, location=from_location, quantity=quantity, user=user)
+        
+        add_to = InventoryTransaction.add_to_inventory(
+                    item=item, location=to_location, quantity=quantity, user=user)
+        
+        return (remove_from, add_to)
