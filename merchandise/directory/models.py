@@ -15,6 +15,13 @@ class Address(models.Model):
         verbose_name = 'Address'
         verbose_name_plural = 'Addresses'
 
+    def __str__(self):
+        if self.line_two:
+            return "{0} {1}, {2}, {3} {4}".format(self.line_one, self.line_two, self.city, self.state, self.zip)
+        else:
+            return "{0}, {1}, {2} {3}".format(self.line_one, self.city, self.state, self.zip)
+
+
 
 class Customer(models.Model):
     """Merchandise customers."""
