@@ -1,15 +1,61 @@
+{% extends "base-no-nav.html" %}
 {% load staticfiles %}
 
-<!DOCTYPE html>
-<html>
-<head>
-    <title>
-        {% block title %}
+{% block main %}
+<!-- SideNav slide-out button -->
+<a href="#" data-activates="slide-out" class="navbar-brand button-collapse"><i class="material-icons">menu</i></a>
+<!--/. SideNav slide-out button -->
+
+<!-- Sidebar navigation -->
+<ul id="slide-out" class="side-nav fixed admin-side-nav stylish-side-nav">
+    <!-- Logo -->
+    <div class="logo-wrapper nav-header">
+        <div class="logo">
+            <a href="{% url 'index' %}">
+                <img src="{% static 'img/thon-logo.png' %}">
+            </a>
+        </div>
+        <div class="nav-user">
+            {% if request.user.is_authenticated %}
+            <img src="http://placehold.it/75x75" class="img-responsive img-circle">
+            <p class="user white-text">
+                <b>
+                {{ request.user.name }}<br/>
+                {{ request.user.username }}
+                </b>
+            </p>
+            {% endif %}
+        </div>
+    </div>
+    <!--/. Logo -->
+
+    <!-- Side navigation links -->
+    <ul class="collapsible collapsible-accordion">
+        <li><a href="#" class="waves-effect waves-light"><i class="fa fa-home"></i> Home</a></li>
+        <li><a href="#" class="waves-effect waves-light"><i class="fa fa-dollar"></i> Sales</a></li>
+        <li><a href="#" class="waves-effect waves-light"><i class="fa fa-th"></i> Inventory</a></li>
+        <li><a href="#" class="waves-effect waves-light"><i class="fa fa-truck"></i> Orders</a></li>
+        <li><a href="#" class="waves-effect waves-light"><i class="fa fa-bar-chart"></i> Reports</a></li>
+        <li><a href="#" class="waves-effect waves-light"><i class="fa fa-users"></i> Users</a></li>
+    </ul>
+    <!--/. Side navigation links -->
+</ul>
+<!--/. Sidebar navigation -->
+
+<main id="main" class="main">
+    <div class="page-header">
+        <h2>{{ page_header }}</h2>
+    </div>
+    <div id="main-content" class="container-fluid">
+        {% block content %}
         {% endblock %}
-    </title>
-</head>
-<body>
-    {% block content %}
-    {% endblock %}
-</body>
-</html>
+    </div>
+</main>
+
+<script>
+    // Initialize collapse button
+    $(".button-collapse").sideNav();
+    // Initialize collapsible (uncomment the line below if you use the dropdown variation)
+    $('.collapsible').collapsible();
+</script>
+{% endblock %}

@@ -1,0 +1,32 @@
+.nav-header {
+    height: 200px;
+}
+
+.logo {
+    height: 50%;
+    background-color: rgb(62,69,81);
+}
+
+.logo img {
+    max-width: 100%;
+}
+
+.nav-user {
+    height: 50%;
+    background-color: rgba(62,69,81,.7);
+}
+
+.login-panel {
+    padding-top: 100px;
+}
+
+.stylish-side-nav .logo-wrapper {
+    background: url("https://psbehrend.psu.edu/sites/default/files/alumni/images/HouseofTHON.jpg") no-repeat center center;
+    background-size: cover;
+}
+
+@media (min-width: 992px) {
+    .main {
+        padding-left: 265px;
+    }
+}

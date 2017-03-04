@@ -53,3 +53,7 @@ class MerchandiseUser(AbstractUser):
     class Meta:
         verbose_name = 'Merchandise User'
         verbose_name_plural = 'Merchandise Users'
+
+    @property
+    def name(self):
+        return "{} {}".format(self.first_name, self.last_name)
