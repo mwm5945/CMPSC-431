@@ -7,7 +7,6 @@ class IndexView(TemplateView):
 
     template_name = "index.html"
     params = {
-        'page_title': "Welcome!",
         'page_header': "THON Merchandise"
     }
 
