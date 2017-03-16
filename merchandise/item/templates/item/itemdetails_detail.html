@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% load merchandise_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6 text-center form-group">
+        <img src="http://placehold.it/350x350">
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Category</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.category }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Active</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.is_active|check_mark }}</p>
+            </div>
+        </div>
+        <hr/>
+        <table class="table">
+            <thead>
+                <th>Size</th>
+                <th>Price</th>
+                <th>SKU</th>
+            </thead>
+            <tbody>
+                {% for item in object.item_set.all %}
+                <tr>
+                    <td>{{ item.size }}</td>
+                    <td>${{ item.price }}</td>
+                    <td>{{ item.sku }}</td>
+                </tr>
+                {% empty %}
+                    <td colspan="3">No Sizes Found</td>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block actions %}
+<a class="btn-floating btn-large red">
+    <i class="large material-icons">create</i>
+</a>
+{% endblock %}
