@@ -1,8 +1,24 @@
 from django.db import models
 
 
+class ItemDetails(models.Model):
+    """Merchandise item details."""
+
+    name = models.CharField(max_length=255)
+    description = models.TextField(default='', blank=True)
+    category = models.ForeignKey('item.ItemCategory', null=True, blank=True, on_delete=models.SET_NULL)
+    is_active = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name = 'Item Details'
+        verbose_name_plural = 'Item Details'
+    
+    def __str__(self):
+        return self.name
+
+
 class Item(models.Model):
-    """Merchandise inventory."""
+    """Merchandise item."""
 
     SMALL = 'S'
     MEDIUM = 'M'
@@ -28,13 +44,10 @@ class Item(models.Model):
         (YOUTH_LARGE, 'Youth Large')
     )
 
-    name = models.CharField(max_length=255)
-    description = models.TextField(default='', blank=True)
     sku = models.SmallIntegerField()
     price = models.DecimalField(max_digits=10, decimal_places=2)
-    is_active = models.BooleanField(default=False)
     size = models.CharField(max_length=2, null=True, blank=True, choices=SIZE_CHOICES)
-    category = models.ForeignKey('item.ItemCategory', null=True, blank=True, on_delete=models.SET_NULL)
+    details = models.ForeignKey('item.ItemDetails', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Item'
@@ -42,6 +55,22 @@ class Item(models.Model):
 
     def __str__(self):
         return "{0} {1}".format(self.name, self.get_size_display())
+
+    @property
+    def name(self):
+        return self.details.name
+    
+    @property
+    def description(self):
+        return self.details.description
+
+    @property
+    def category(self):
+        return self.details.category
+
+    @property
+    def is_active(self):
+        return self.details.is_active
 
 
 class ItemCategory(models.Model):
