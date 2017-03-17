@@ -17,9 +17,8 @@ class CreateScheduleForm(ModelForm):
         self.helper.layout = Layout(
             'scheduled_employee',
             'location',
-            Div('start_time', css_class='col-md-6'),
-            Div('end_time', css_class='col-md-6'),
-
+            'start_time',
+            'end_time',
             ButtonHolder(
                 Submit('submit', 'Submit'),
             )
