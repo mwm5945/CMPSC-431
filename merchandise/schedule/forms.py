@@ -28,7 +28,7 @@ class CreateScheduleForm(ModelForm):
     class Meta:
         model = models.Shift
         help_texts = {
-            'start_time': """Please enter in MM/DD/YYYY HH:MM 24-hour format""",
-            'end_time': """Please enter in MM/DD/YYYY HH:MM 24-hour format""",
+            'start_time': """Please enter, in 24-Hour Format, as YYYY-MM-DD HH:MM""",
+            'end_time': """Please enter, in 24-Hour Format, as YYYY-MM-DD HH:MM""",
         }
         exclude = []

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="page-header">
+            <h3>Update a Schedule</h3>
+        </div>
+
+        {% crispy form %}
+
+    </div>
+
+{% endblock %}
