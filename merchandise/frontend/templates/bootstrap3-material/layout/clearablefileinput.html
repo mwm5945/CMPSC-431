@@ -1,0 +1,6 @@
+{% load crispy_forms_filters %}
+{% load l10n %}
+
+<div class="controls {{ field_class }}"{% if flat_attrs %} {{ flat_attrs|safe }}{% endif %}>
+  <input id="{{ field.auto_id }}" name="{{ field.name }}" class="dropify" type="file" {% if field.value %}data-default-file="{{ MEDIA_URL }}{{ field.value }}"{% endif %}/>
+</div>
