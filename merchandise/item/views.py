@@ -62,11 +62,10 @@ class ItemDetailsUpdateView(UpdateView):
 
     model = ItemDetails
     fields = ['name', 'description', 'category', 'is_active']
-    params = {
-        'page_header': "New Item"
-    }
+    params = {}
 
     def get_context_data(self, **kwargs):
+        self.params['page_header'] = self.object.name
         context = super(ItemDetailsUpdateView, self).get_context_data(**kwargs)
         context.update(self.params)
         return context
