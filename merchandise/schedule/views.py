@@ -1,9 +1,6 @@
 from django.contrib import messages
-from django.shortcuts import render
 
-# Create your views here.
-from django.urls import reverse
-from django.urls import reverse_lazy
+from django.urls import reverse, reverse_lazy
 from django.utils import timezone
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DeleteView
 
