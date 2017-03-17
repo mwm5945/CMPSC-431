@@ -51,7 +51,7 @@
 {% endblock %}
 
 {% block actions %}
-<a class="btn-floating btn-large red">
+<a class="btn-floating btn-large red" href="{% url 'item:item_details_update' object.id %}">
     <i class="large material-icons">create</i>
 </a>
 {% endblock %}

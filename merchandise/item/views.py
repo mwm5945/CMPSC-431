@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse
 from item.models import ItemDetails
 from crispy_forms.helper import FormHelper
@@ -44,6 +44,30 @@ class ItemDetailsCreateView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(ItemDetailsCreateView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.helper = FormHelper()
+        form.helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
+        return form
+    
+    def get_success_url(self):
+        return reverse('item:item_details_detail', kwargs={'pk':self.object.id})
+
+
+class ItemDetailsUpdateView(UpdateView):
+    """Update View for ItemDetails."""
+
+    model = ItemDetails
+    fields = ['name', 'description', 'category', 'is_active']
+    params = {
+        'page_header': "New Item"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(ItemDetailsUpdateView, self).get_context_data(**kwargs)
         context.update(self.params)
         return context
 
