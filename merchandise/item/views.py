@@ -106,3 +106,26 @@ class ItemCreateView(CreateView):
         return {
             'details':details
         }
+
+
+class ItemUpdateView(UpdateView):
+    """Update View for Item."""
+
+    model = Item
+    fields = ['price', 'sku']
+    params = {}
+
+    def get_context_data(self, **kwargs):
+        self.params['page_header'] = self.object
+        context = super(ItemUpdateView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.helper = FormHelper()
+        form.helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
+        return form
+    
+    def get_success_url(self):
+        return reverse('item:item_details_detail', kwargs={'pk':self.object.details.id})

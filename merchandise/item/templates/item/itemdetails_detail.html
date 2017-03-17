@@ -37,7 +37,7 @@
             <tbody>
                 {% for item in object.item_set.all %}
                 <tr>
-                    <td>{{ item.size }}</td>
+                    <td><a href="{% url 'item:item_update' item.id %}">{{ item.size }}</a></td>
                     <td>${{ item.price }}</td>
                     <td>{{ item.sku }}</td>
                 </tr>
