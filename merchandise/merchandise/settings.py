@@ -136,4 +136,3 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
-CRISPY_CLASS_CONVERTERS = {'timeinput': 'timepicker'}
