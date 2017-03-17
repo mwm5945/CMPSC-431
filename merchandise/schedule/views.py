@@ -47,6 +47,7 @@ class UpdateScheduleView(UpdateView):
         messages.success(self.request, 'Schedule updated successfully.')
         return reverse('users:list_schedules')
 
+
 class DeleteScheduleView(DeleteView):
     """Delete View for a schedule."""
 

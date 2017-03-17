@@ -135,4 +135,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Crispy forms settings
+CRISPY_TEMPLATE_PACK = 'bootstrap3-material'
+CRISPY_ALLOWED_TEMPLATE_PACKS = ('bootstrap3', 'bootstrap3-material')
+CRISPY_CLASS_CONVERTERS = {
+    'textarea': 'materialize-textarea',
+    'timeinput': 'timepicker'
+}
