@@ -54,4 +54,7 @@
 <a class="btn-floating btn-large red" href="{% url 'item:item_details_update' object.id %}">
     <i class="large material-icons">create</i>
 </a>
+<ul>
+    <li><a class="btn-floating green" href="{% url 'item:item_create' object.id %}"><i class="material-icons">add</i></a></li>
+</ul>
 {% endblock %}

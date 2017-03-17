@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.urls import reverse
-from item.models import ItemDetails
+from item.forms import ItemForm
+from item.models import ItemDetails, Item
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
 
@@ -78,3 +79,30 @@ class ItemDetailsUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse('item:item_details_detail', kwargs={'pk':self.object.id})
+
+
+class ItemCreateView(CreateView):
+    """Create View for Item."""
+
+    model = Item
+    form_class = ItemForm
+    params = {}
+
+    def get_context_data(self, **kwargs):
+        self.params['page_header'] = "Add Size for {}".format(
+                                        get_object_or_404(
+                                            ItemDetails, 
+                                            pk=self.kwargs.get('pk')
+                                        ).name)
+        context = super(ItemCreateView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+    
+    def get_success_url(self):
+        return reverse('item:item_details_detail', kwargs={'pk':self.object.details.id})
+
+    def get_initial(self):
+        details = get_object_or_404(ItemDetails, pk=self.kwargs.get('pk'))
+        return {
+            'details':details
+        }
