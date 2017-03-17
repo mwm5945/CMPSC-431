@@ -30,4 +30,5 @@ urlpatterns = [
     url(r'^$', 
         IndexView.as_view(), 
         name='index'),
+    url(r'^users/', include('schedule.urls', namespace='users', app_name='schedule')),
 ]
