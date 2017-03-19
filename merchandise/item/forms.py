@@ -1,6 +1,6 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
-from django.forms import ModelForm, HiddenInput
+from crispy_forms.layout import Submit, Div, Layout, ButtonHolder
+from django.forms import Form, ModelForm, HiddenInput, CharField
 from item.models import Item, ItemDetails
 
 
@@ -17,4 +17,17 @@ class ItemForm(ModelForm):
     class Meta:
         model = Item
         fields = ['details', 'size', 'price', 'sku']
-        
+
+class ItemSearchForm(Form):
+    """Item Search Form."""
+
+    name = CharField(max_length=255, required=False, label="Name")
+
+    def __init__(self, *args, **kwargs):
+        super(ItemSearchForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            Div(
+                'name'
+            )
+        )

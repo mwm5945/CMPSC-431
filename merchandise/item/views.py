@@ -1,10 +1,25 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
 from django.urls import reverse
-from item.forms import ItemForm
+from item.forms import ItemForm, ItemSearchForm
 from item.models import ItemDetails, Item
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+
+
+class ItemDetailsView(FormView):
+    """Form View for the Item Details page."""
+
+    template_name = "item/itemdetails.html"
+    form_class = ItemSearchForm
+    params = {
+        'page_header': "Items"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(ItemDetailsView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
 
 
 class ItemDetailsListView(ListView):
@@ -19,13 +34,15 @@ class ItemDetailsListView(ListView):
         context = super(ItemDetailsListView, self).get_context_data(**kwargs)
         context.update(self.params)
         return context
-
+    
+    def get_queryset(self):
+        return super(ItemDetailsListView, self).get_queryset().filter(
+            name__icontains=self.request.GET.get('name', '')).order_by('name')
 
 class ItemDetailsDetailView(DetailView):
     """Detail View for ItemDetails."""
 
     model = ItemDetails
-    params = {}
 
     def get_context_data(self, **kwargs):
         self.params['page_header'] = self.object.name
