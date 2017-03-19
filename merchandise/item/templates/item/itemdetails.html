@@ -8,15 +8,15 @@
 
 {% block content %}
 <div class="row">
-    <div id="items" class="col-md-9">
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-3 col-md-push-9">
         <div class="panel panel-default">
             <div class="panel-body">
                 <h4>Search</h4>
                 {% crispy form %}
             </div>
         </div>
+    </div>    
+    <div id="items" class="col-md-9 col-md-pull-3">
     </div>
 </div>
 {% endblock %}
