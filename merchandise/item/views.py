@@ -43,6 +43,7 @@ class ItemDetailsDetailView(DetailView):
     """Detail View for ItemDetails."""
 
     model = ItemDetails
+    params = {}
 
     def get_context_data(self, **kwargs):
         self.params['page_header'] = self.object.name
