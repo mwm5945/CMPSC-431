@@ -22,7 +22,6 @@ class Address(models.Model):
             return "{0}, {1}, {2} {3}".format(self.line_one, self.city, self.state, self.zip)
 
 
-
 class Customer(models.Model):
     """Merchandise customers."""
 

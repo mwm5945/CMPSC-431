@@ -19,15 +19,9 @@ from django.contrib.auth import views as auth_views
 from frontend.views import IndexView
 
 urlpatterns = [
-    url(r'^item/',
-        include('item.urls',
-                namespace='item')),
-    url(r'^admin/', 
-        admin.site.urls),
-    url(r'^login/$', 
-        auth_views.login, 
-        name='login'),
-    url(r'^$', 
-        IndexView.as_view(), 
-        name='index'),
+    url(r'^item/', include('item.urls', namespace='item')),
+    url(r'^admin/', admin.site.urls),
+    url(r'^login/$', auth_views.login, name='login'),
+    url(r'^$', IndexView.as_view(), name='index'),
+    url(r'^directory/', include('directory.urls', namespace='directory')),
 ]
