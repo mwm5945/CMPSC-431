@@ -1,5 +1,5 @@
 from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit, Div, Layout, ButtonHolder
+from crispy_forms.layout import Submit, Div, Layout, ButtonHolder, Reset
 from django.forms import Form, ModelForm, HiddenInput, CharField
 from item.models import Item, ItemDetails
 
@@ -29,5 +29,8 @@ class ItemSearchForm(Form):
         self.helper.layout = Layout(
             Div(
                 'name'
+            ), 
+            ButtonHolder(
+                Reset('Reset', 'reset')
             )
         )

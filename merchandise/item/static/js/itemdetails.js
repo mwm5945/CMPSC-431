@@ -10,4 +10,7 @@ $(document).ready(function() {
     $("#id_name").keyup(function() {
         loadResults();
     });
+    $("#reset-id-reset").click(function() {
+        setTimeout(loadResults, 100);
+    })
 });
