@@ -3,21 +3,15 @@
 
 {% block content %}
 
-    <div class="container">
-        <div class="page-header">
-            <h3>Confirm Delete Item<br></h3>
-        </div>
-
-        <div class="row">
-            <div class="col-xs-12">
-                <form action="" method="post">{% csrf_token %}
-                    <p>Are you sure you want to delete the schedule for <b>{{ shift.scheduled_employee.name }}</b> on
-                        <b>{{ shift.start_time|date:"m/d/Y, P" }}</b> to <b>{{ shift.end_time|date:"m/d/Y, P" }}</b>?
-                        This action cannot be undone.
-                    </p>
-                    <input type="submit" value="Confirm"/>
-                </form>
-            </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <form action="" method="post">{% csrf_token %}
+                <p>Are you sure you want to delete the schedule for <b>{{ shift.scheduled_employee.name }}</b> on
+                    <b>{{ shift.start_time|date:"m/d/Y, P" }}</b> to <b>{{ shift.end_time|date:"m/d/Y, P" }}</b>?
+                    This action cannot be undone.
+                </p>
+                <input type="submit" value="Confirm"/>
+            </form>
         </div>
     </div>
 

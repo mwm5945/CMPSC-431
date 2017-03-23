@@ -11,6 +11,15 @@ class UsersLandingView(TemplateView):
     """Landing Page for users."""
 
     template_name = 'schedule/users_landing.html'
+    params = {
+        'page_header': "User Management"
+    }
+
+    def get_context_data(self, **kwargs):
+        """Returns context for the."""
+        context = super(UsersLandingView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
 
 
 class CreateScheduleView(CreateView):
@@ -21,6 +30,16 @@ class CreateScheduleView(CreateView):
     template_name = 'schedule/create_schedule.html'
     success_url = reverse_lazy('users:list_schedules')
 
+    params = {
+        'page_header': "Add a Schedule"
+    }
+
+    def get_context_data(self, **kwargs):
+        """Returns context for the."""
+        context = super(CreateScheduleView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
 
 class ListScheduleView(ListView):
     """View for showing all schedules."""
@@ -28,9 +47,19 @@ class ListScheduleView(ListView):
     model = Shift
     template_name = 'schedule/list_schedule.html'
 
+    params = {
+        'page_header': "User Schedules"
+    }
+
     def get_queryset(self):
         qs = super(ListScheduleView, self).get_queryset()
         return qs.filter(start_time__gt=timezone.now()).order_by('start_time')
+
+    def get_context_data(self, **kwargs):
+        """Returns context for the."""
+        context = super(ListScheduleView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
 
 
 class UpdateScheduleView(UpdateView):
@@ -40,10 +69,20 @@ class UpdateScheduleView(UpdateView):
     form_class = CreateScheduleForm
     template_name = 'schedule/update_schedule.html'
 
+    params = {
+        'page_header': "Update a Schedule"
+    }
+
     def get_success_url(self):
         messages.success(self.request, 'Schedule updated successfully.')
         return reverse('users:list_schedules')
 
+
+    def get_context_data(self, **kwargs):
+        """Returns context for the."""
+        context = super(UpdateScheduleView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
 
 class DeleteScheduleView(DeleteView):
     """Delete View for a schedule."""
@@ -51,6 +90,16 @@ class DeleteScheduleView(DeleteView):
     model = Shift
     template_name = 'schedule/confirm_delete_schedule.html'
 
+    params = {
+        'page_header': "Delete a Schedule"
+    }
+
     def get_success_url(self):
         messages.success(self.request, 'Schedule removed successfully.')
         return reverse('users:list_schedules')
+
+    def get_context_data(self, **kwargs):
+        """Returns context for the."""
+        context = super(DeleteScheduleView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
