@@ -7,20 +7,6 @@ from django.views.generic import CreateView, ListView, TemplateView, UpdateView,
 from .models import Shift
 from .forms import CreateScheduleForm
 
-class UsersLandingView(TemplateView):
-    """Landing Page for users."""
-
-    template_name = 'schedule/users_landing.html'
-    params = {
-        'page_header': "User Management"
-    }
-
-    def get_context_data(self, **kwargs):
-        """Returns context for the."""
-        context = super(UsersLandingView, self).get_context_data(**kwargs)
-        context.update(self.params)
-        return context
-
 
 class CreateScheduleView(CreateView):
     """Create View for adding a schedule."""
