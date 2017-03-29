@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3 col-md-push-9">
+        <div class="panel-group">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Add Item</h4>
+                    {% crispy form %}
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <h4>Total</h4>
+                    <h3>{{ total }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div id="items" class="col-md-9 col-md-pull-3">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in object_list %}
+                <tr>
+                    <td>{{ item.name }}</a></td>
+                    <td>{{ item.price_display }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.total_display }}</td>
+                </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock content %}
+
+{% block actions %}
+<a class="btn-floating btn-large green" href="">
+    <i class="large material-icons">done</i>
+</a>
+<ul>
+    <li><a class="btn-floating red" href="{% url 'sale:sale_clear' %}"><i class="material-icons">clear</i></a></li>
+</ul>
+{% endblock %}
