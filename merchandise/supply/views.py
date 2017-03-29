@@ -23,7 +23,7 @@ class OrderDetailView(DetailView):
     params = {}
 
     def get_context_data(self, **kwargs):
-        self.params['page_header'] = self.object.name
+        self.params['page_header'] = self.object.supplier
         context = super(OrderDetailView, self).get_context_data(**kwargs)
         context.update(self.params)
         return context

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Status</th>
+                    <th>Supplier</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for order in object_list %}
+                <tr>
+                    <td><a href="{% url 'supply:order_detail' order.id %}"> {{ order.get_status_display }}</a></td>
+                    <td>{{ order.supplier }}</td>
+                    <td>{{ order.timestamp }}</td>
+                </tr>   
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block actions %}
+<a class="btn-floating btn-large green">
+    <i class="large material-icons">add</i>
+</a>
+{% endblock %}
