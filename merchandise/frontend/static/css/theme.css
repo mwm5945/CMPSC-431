@@ -21,7 +21,7 @@
 }
 
 .stylish-side-nav .logo-wrapper {
-    background: url("https://psbehrend.psu.edu/sites/default/files/alumni/images/HouseofTHON.jpg") no-repeat center center;
+    background: url("/static/img/houseofthon.jpg") no-repeat center center;
     background-size: cover;
 }
 
