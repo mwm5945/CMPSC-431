@@ -37,7 +37,7 @@
             <tbody>
                 {% for item in object.item_set.all %}
                 <tr>
-                    <td>{{ item.size }}</td>
+                    <td><a href="{% url 'item:item_update' item.id %}">{{ item.size }}</a></td>
                     <td>${{ item.price }}</td>
                     <td>{{ item.sku }}</td>
                 </tr>
@@ -51,7 +51,10 @@
 {% endblock %}
 
 {% block actions %}
-<a class="btn-floating btn-large red">
+<a class="btn-floating btn-large red" href="{% url 'item:item_details_update' object.id %}">
     <i class="large material-icons">create</i>
 </a>
+<ul>
+    <li><a class="btn-floating green" href="{% url 'item:item_create' object.id %}"><i class="material-icons">add</i></a></li>
+</ul>
 {% endblock %}
