@@ -1,51 +1,73 @@
 from django.contrib import messages
 
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse
 from django.utils import timezone
-from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DeleteView
+from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
 
 from .models import Location
-from .forms import CreateLocationForm
+from .forms import LocationForm
 
 
-class CreateLocationView(CreateView):
-    """Create View for adding a location."""
-
-    model = Location
-    form_class = CreateLocationForm
-    template_name = 'location/create_location.html'
-    success_url = reverse_lazy('location:list_locations')
-
-
-class ListLocationView(ListView):
+class LocationListView(ListView):
     """View for showing all locations. Each will link to inventory page."""
 
     model = Location
-    template_name = 'location/list_location.html'
+    params = {
+        'page_header': "Locations"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(LocationListView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
 
     def get_queryset(self):
-        return super(ListLocationView, self).get_queryset()
-        # return qs.filter(start_time__gt=timezone.now()).order_by('start_time')
+        return super(LocationListView, self).get_queryset()
 
 
-class UpdateLocationView(UpdateView):
-    """View for updating a location."""
-
-    model = Location
-    form_class = CreateLocationForm
-    template_name = 'location/update_location.html'
-
-    def get_success_url(self):
-        messages.success(self.request, 'Location updated successfully.')
-        return reverse('location:list_locations')
-
-
-class DeleteLocationView(DeleteView):
-    """Delete View for a location."""
+class LocationDetailView(DetailView):
+    """Detail View for Location."""
 
     model = Location
-    template_name = 'location/delete_location.html'
+    params = {}
+
+    def get_context_data(self, **kwargs):
+        self.params['page_header'] = self.object.name
+        context = super(LocationDetailView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+
+class LocationCreateView(CreateView):
+    """Create View for Location."""
+
+    model = Location
+    form_class = LocationForm
+    params = {
+        'page_header': "Add Location"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(LocationCreateView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
 
     def get_success_url(self):
-        messages.success(self.request, 'Location removed successfully.')
-        return reverse('location:list_locations')
+        return reverse('location:location_detail', kwargs={'pk':self.object.id})
+
+
+class LocationUpdateView(UpdateView):
+    """Update View for Location."""
+
+    model = Location
+    form_class = LocationForm
+    params = {}
+
+    def get_context_data(self, **kwargs):
+        self.params['page_header'] = self.object.name
+        context = super(LocationUpdateView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+    def get_success_url(self):
+        return reverse('location:location_detail', kwargs={'pk':self.object.id})

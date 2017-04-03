@@ -3,9 +3,9 @@ from . import views
 
 
 urlpatterns = [
-    url(r'^create_location/', views.CreateLocationView.as_view(), name='create_location'),
-    url(r'^list_locations/', views.ListLocationView.as_view(), name='list_locations'),
-    url(r'^update_location/(?P<pk>\d+)/', views.UpdateLocationView.as_view(), name='update_location'),
-    url(r'^delete_location/(?P<pk>\d+)/', views.DeleteLocationView.as_view(), name='delete_location'),
+    url(r'^create/', views.LocationCreateView.as_view(), name='location_create'),
+    url(r'^update/(?P<pk>\d+)/', views.LocationUpdateView.as_view(), name='location_update'),
+    url(r'^(?P<pk>\d+)/', views.LocationDetailView.as_view(), name='location_detail'),
+    url(r'^$', views.LocationListView.as_view(), name='locations'),
 ]
 
