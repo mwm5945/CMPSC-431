@@ -2,13 +2,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-6 text-center form-group">
-        <img src="http://placehold.it/350x350">
-    </div>
-</div>
-<div class="row">
     <div class="col-md-6">
-        <hr/>
         <div class="row">
             <div class="col-md-6">
                 <p><b>Status</b></p>
@@ -59,7 +53,7 @@
 {% endblock %}
 
 {% block actions %}
-<a class="btn-floating btn-large red">
+<a class="btn-floating btn-large red" href="{% url 'supply:order_update' object.id %}">
     <i class="large material-icons">create</i>
 </a>
 {% endblock %}
