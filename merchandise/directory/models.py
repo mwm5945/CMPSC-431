@@ -46,6 +46,9 @@ class Supplier(models.Model):
         verbose_name = 'Supplier'
         verbose_name_plural = 'Suppliers'
 
+    def __str__(self):
+        return self.name
+
 
 class MerchandiseUser(AbstractUser):
     """Merchandise user."""
