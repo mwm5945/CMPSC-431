@@ -15,6 +15,10 @@ class ItemDetails(models.Model):
     
     def __str__(self):
         return self.name
+    
+    @property
+    def sizes(self):
+        return self.item_set
 
 
 class Item(models.Model):
