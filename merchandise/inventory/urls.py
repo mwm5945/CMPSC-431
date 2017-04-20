@@ -1,20 +1,20 @@
 from django.conf.urls import url
 from django.urls import reverse
-from item import views
+from inventory import views
 
 app_name = 'inventory'
 urlpatterns = [
-    # url(r'^create/$',
-    #     views.ItemDetailsCreateView.as_view(),
-    #     name='item_details_create'),
-    # url(r'^list/$',
-    #     views.ItemDetailsListView.as_view(),
-    #     name='item_details_list'),
-    # url(r'^update/(?P<pk>[-\w]+)/$',
-    #     views.ItemDetailsUpdateView.as_view(),
-    #     name='item_details_update'),
+    url(r'^create/$',
+        views.CreateInventory.as_view(),
+        name='inventory_create'),
+    url(r'^list/$',
+        views.UpdateInventory.as_view(),
+        name='inventory_update'),
+    url(r'^update/(?P<pk>[-\w]+)/$',
+        views.ListInventory.as_view(),
+        name='inventory_list'),
     # url(r'^size/update/(?P<pk>[-\w]+)/$',
-    #     views.ItemUpdateView.as_view(),
+    #     views.ListInventory.as_view(),
     #     name='item_update'),
     # url(r'^(?P<pk>[-\w]+)/$',
     #     views.ItemDetailsDetailView.as_view(),

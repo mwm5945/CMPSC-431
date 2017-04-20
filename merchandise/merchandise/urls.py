@@ -36,4 +36,7 @@ urlpatterns = [
     url(r'^users/', include('schedule.urls', namespace='users', app_name='schedule')),
 
     url(r'^location/', include('location.urls', namespace='location', app_name='location')),
+    url(r'^inventory/',
+        include('inventory.urls',
+                namespace='inventory'))
 ]
