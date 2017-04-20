@@ -72,9 +72,9 @@ class ListInventory(ListView):
         context.update(self.params)
         return context
 
-    def get_queryset(self):
-        return super(ListInventory, self).get_queryset().filter(
-            name__icontains=self.request.GET.get('name', '')).order_by('inventory__name')
+    # def get_queryset(self):
+    #     return super(ListInventory, self).get_queryset().filter(
+    #         name__icontains=self.request.GET.get('name', '')).order_by('inventory__name')
 
 
 class CreateInventoryTransaction(CreateView):
