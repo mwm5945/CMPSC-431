@@ -62,6 +62,20 @@ class UpdateInventory(UpdateView):
 class ListInventory(ListView):
     """List all inventory objects."""
 
+    model = Inventory
+    params = {
+        'page_header': "Inventory"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(ListInventory, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+    def get_queryset(self):
+        return super(ListInventory, self).get_queryset().filter(
+            name__icontains=self.request.GET.get('name', '')).order_by('inventory__name')
+
 
 class CreateInventoryTransaction(CreateView):
     """Create view for inventory transaction."""
