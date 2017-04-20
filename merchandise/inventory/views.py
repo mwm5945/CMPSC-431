@@ -37,6 +37,27 @@ class CreateInventory(CreateView):
 class UpdateInventory(UpdateView):
     """Update an inventory object."""
 
+    model = Inventory
+    fields = ['item', 'quantity', 'location']
+    params = {}
+
+    def get_context_data(self, **kwargs):
+        self.params['page_header'] = self.object.name
+        context = super(UpdateInventory, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.helper = FormHelper()
+        form.helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
+        return form
+
+
+    # TODO: Update with real URL
+    def get_success_url(self):
+        return reverse('item:item_details_detail', kwargs={'pk': self.object.id})
+
 
 class ListInventory(ListView):
     """List all inventory objects."""
