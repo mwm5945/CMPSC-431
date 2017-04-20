@@ -20,6 +20,8 @@ class InventoryTransaction(models.Model):
 
     inventory = models.ForeignKey('inventory.Inventory', on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
+    to_loc = models.ForeignKey('location.location', on_delete=models.CASCADE)
+    from_loc = models.ForeignKey('location.location', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('directory.MerchandiseUser', null=True, blank=True, on_delete=models.SET_NULL)
 

@@ -6,7 +6,7 @@ from django.shortcuts import render
 from django.urls import reverse
 from django.views.generic import CreateView, ListView, UpdateView
 
-from inventory.models import Inventory
+from inventory.models import Inventory, InventoryTransaction
 
 
 class CreateInventory(CreateView):
@@ -29,20 +29,20 @@ class CreateInventory(CreateView):
         form.helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
         return form
 
-
-    # TODO: Fix with real URL
     def get_success_url(self):
-        return reverse('item:item_details_detail', kwargs={'pk':self.object.id})
+        return reverse('inventory:inventory_list')
 
 class UpdateInventory(UpdateView):
     """Update an inventory object."""
 
     model = Inventory
     fields = ['item', 'quantity', 'location']
-    params = {}
+    params = {
+        # 'page_header': 'Update Inventory'
+    }
 
     def get_context_data(self, **kwargs):
-        self.params['page_header'] = self.object.name
+        self.params['page_header'] = self.object.item.name
         context = super(UpdateInventory, self).get_context_data(**kwargs)
         context.update(self.params)
         return context
@@ -53,10 +53,8 @@ class UpdateInventory(UpdateView):
         form.helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
         return form
 
-
-    # TODO: Update with real URL
     def get_success_url(self):
-        return reverse('item:item_details_detail', kwargs={'pk': self.object.id})
+        return reverse('inventory:inventory_list')
 
 
 class ListInventory(ListView):
@@ -72,14 +70,40 @@ class ListInventory(ListView):
         context.update(self.params)
         return context
 
-    # def get_queryset(self):
-    #     return super(ListInventory, self).get_queryset().filter(
-    #         name__icontains=self.request.GET.get('name', '')).order_by('inventory__name')
-
 
 class CreateInventoryTransaction(CreateView):
     """Create view for inventory transaction."""
 
+    model = InventoryTransaction
+    fields = ['inventory', 'quantity', 'to_loc', 'from_loc']
+    params = {
+        'page_header': "Move Inventory"
+    }
+
+    def get_context_data(self, **kwargs):
+        self.params['page_header'] = self.object.item.name
+        context = super(UpdateInventory, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.helper = FormHelper()
+        form.helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
+        return form
+
+    def get_success_url(self):
+        return reverse('inventory:inventory_list')
+
 
 class ListInventoryTransactions(ListView):
     """List view for all inventory transactions."""
+    model = InventoryTransaction
+    params = {
+        'page_header': "Inventory Movements"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(ListInventoryTransactions, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
