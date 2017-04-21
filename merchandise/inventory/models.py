@@ -20,10 +20,9 @@ class InventoryTransaction(models.Model):
 
     inventory = models.ForeignKey('inventory.Inventory', on_delete=models.CASCADE)
     quantity = models.IntegerField(default=0)
-    to_loc = models.ForeignKey('location.location', on_delete=models.CASCADE)
-    from_loc = models.ForeignKey('location.location', on_delete=models.CASCADE)
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('directory.MerchandiseUser', null=True, blank=True, on_delete=models.SET_NULL)
+    pair_transaction = models.ForeignKey('inventory.InventoryTransaction', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Inventory Transaction'
@@ -61,5 +60,8 @@ class InventoryTransaction(models.Model):
         
         add_to = InventoryTransaction.add_to_inventory(
                     item=item, location=to_location, quantity=quantity, user=user)
+
+        remove_from.pair_transaction = add_to
+        add_to.pair_transaction = remove_from
         
         return (remove_from, add_to)
