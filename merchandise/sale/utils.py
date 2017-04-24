@@ -34,6 +34,15 @@ class Cart:
             ret.append(temp)
         return ret
 
+    def get_items_list(self):
+        items = self.get_items()
+        ret = []
+        for item in items:
+            i = Item.objects.get(id=item['id'])
+            for _ in range(0, item['quantity']):
+                ret.append(i)
+        return ret
+
     def add_item(self, item_id):
         item_id = str(item_id)
         if item_id in self.cart_items:
