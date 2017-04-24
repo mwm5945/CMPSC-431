@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load merchandise_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Customer</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.transaction.customer }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Status</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.get_status_display }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Price</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>${{ object.price }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Time</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.transaction.timestamp }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Transaction</b></p>
+            </div>
+            <div class="col-md-6">
+                <p><a href="{% url 'sale:transaction_detail' object.transaction.id %}">View</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block actions %}
+<a class="btn-floating btn-large red" href="{% url 'sale:sale_return' object.id %}">
+    <i class="large material-icons">undo</i>
+</a>
+{% endblock %}

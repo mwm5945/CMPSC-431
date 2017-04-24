@@ -33,6 +33,9 @@ class Customer(models.Model):
         verbose_name = 'Customer'
         verbose_name_plural = 'Customers'
 
+    def __str__(self):
+        return self.email
+
 
 class Supplier(models.Model):
     """Merchandise supplier."""
@@ -60,3 +63,6 @@ class MerchandiseUser(AbstractUser):
     @property
     def name(self):
         return "{} {}".format(self.first_name, self.last_name)
+
+    def __str__(self):
+        return self.name
