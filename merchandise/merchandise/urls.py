@@ -18,13 +18,28 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from frontend.views import IndexView
 
+from item import viewsets as item_viewsets
+
+from rest_framework import routers
+
+
+router = routers.DefaultRouter()
+router.register(r'items', item_viewsets.ItemDetailsViewSet)
+router.register(r'sizes', item_viewsets.ItemViewSet)
+router.register(r'categories', item_viewsets.ItemCategoryViewSet)
+
 urlpatterns = [
+    url(r'^api/',
+        include(router.urls)),
     url(r'^item/',
         include('item.urls',
                 namespace='item')),
     url(r'^sale/',
         include('sale.urls',
                 namespace='sale')),
+    url(r'^supply/',
+        include('supply.urls',
+                namespace='supply')),
     url(r'^admin/', 
         admin.site.urls),
     url(r'^login/$', 
