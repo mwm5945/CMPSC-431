@@ -19,10 +19,4 @@ urlpatterns = [
     url(r'list_moves/$',
         views.ListInventoryTransactions.as_view(),
         name='list_moves'),
-    # url(r'^(?P<pk>[-\w]+)/add_size/$',
-    #     views.ItemCreateView.as_view(),
-    #     name='item_create'),
-    # url(r'^$',
-    #     views.ItemDetailsView.as_view(),
-    #     name='item_details'),
 ]

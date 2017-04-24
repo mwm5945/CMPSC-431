@@ -8,14 +8,18 @@
                 <th>Name</th>
                 <th>Location</th>
                 <th>Quantity</th>
+                <th>User</th>
+                <th>Timestamp</th>
             </tr>
         </thead>
         <tbody>
-            {% for item in object_list %}
+            {% for transaction in object_list %}
             <tr>
-                <td><a href="{% url 'item:item_details_detail' item.item.id %}">{{ item.item }}</a></td>
-                <td>{{ item.location }}</td>
-                <td>{{ item.quantity }}</td>
+                <td><a href="{% url 'item:item_details_detail' transaction.inventory.item.id %}">{{ transaction.inventory.item.name }}</a></td>
+                <td>{{ transaction.inventory.location }}</td>
+                <td>{{ transaction.quantity }}</td>
+                <td>{{ transaction.user }}</td>
+                <td>{{ transaction.timestamp }}</td>
             </tr>
             {% empty %}
             <tr>

@@ -1,13 +1,14 @@
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Submit
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import reverse
-from django.views.generic import CreateView, ListView, UpdateView
+from django.urls import reverse, reverse_lazy
+from django.views.generic import CreateView, ListView, UpdateView, FormView
 
-from inventory.models import Inventory, InventoryTransaction
-
+from .models import Inventory, InventoryTransaction
+from .forms import CreateInventoryTransactionForm
 
 class CreateInventory(CreateView):
     """Create an Inventory object."""
@@ -69,29 +70,28 @@ class ListInventory(ListView):
         return context
 
 
-class CreateInventoryTransaction(CreateView):
+class CreateInventoryTransaction(FormView):
     """Create view for inventory transaction."""
 
+    template_name = 'inventory/inventorytransaction_form.html'
+    form_class = CreateInventoryTransactionForm
     model = InventoryTransaction
-    fields = ['inventory', 'quantity']
+    #success_url = reverse_lazy('inventory:list_moves')
+
     params = {
         'page_header': "Move Inventory"
     }
 
-    def get_context_data(self, **kwargs):
-        context = super(CreateInventoryTransaction, self).get_context_data(**kwargs)
-        context.update(self.params)
-        return context
+    def form_valid(self, form):
+        """Handle the valid form."""
+        item = form.cleaned_data['inventory']
+        quantity = form.cleaned_data['quantity']
+        to_loc = form.cleaned_data['to_loc']
+        from_loc = form.cleaned_data['from_loc']
 
-    def get_form(self, form_class=None):
-        form = super().get_form(form_class)
-        form.helper = FormHelper()
-        form.helper.add_input(Submit('submit', 'Submit', css_class='btn-primary'))
-        return form
+        InventoryTransaction.move_inventory(item, from_loc, to_loc, quantity, user=self.request.user)
 
-    def get_success_url(self):
-        return reverse('inventory:inventory_list')
-
+        return HttpResponseRedirect(reverse_lazy('inventory:list_moves'))
 
 class ListInventoryTransactions(ListView):
     """List view for all inventory transactions."""
