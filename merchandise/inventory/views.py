@@ -37,9 +37,7 @@ class UpdateInventory(UpdateView):
 
     model = Inventory
     fields = ['item', 'quantity', 'location']
-    params = {
-        # 'page_header': 'Update Inventory'
-    }
+    params = {}
 
     def get_context_data(self, **kwargs):
         self.params['page_header'] = self.object.item.name
@@ -75,14 +73,13 @@ class CreateInventoryTransaction(CreateView):
     """Create view for inventory transaction."""
 
     model = InventoryTransaction
-    fields = ['inventory', 'quantity', 'to_loc', 'from_loc']
+    fields = ['inventory', 'quantity']
     params = {
         'page_header': "Move Inventory"
     }
 
     def get_context_data(self, **kwargs):
-        self.params['page_header'] = self.object.item.name
-        context = super(UpdateInventory, self).get_context_data(**kwargs)
+        context = super(CreateInventoryTransaction, self).get_context_data(**kwargs)
         context.update(self.params)
         return context
 

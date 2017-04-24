@@ -13,6 +13,9 @@ class Inventory(models.Model):
         verbose_name = 'Inventory'
         verbose_name_plural = 'Inventories'
         unique_together = ('item', 'location')
+
+    def __str__(self):
+        return self.item.name + " " +  self.item.get_size_display()
         
 
 class InventoryTransaction(models.Model):
@@ -22,7 +25,8 @@ class InventoryTransaction(models.Model):
     quantity = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
     user = models.ForeignKey('directory.MerchandiseUser', null=True, blank=True, on_delete=models.SET_NULL)
-    pair_transaction = models.ForeignKey('inventory.InventoryTransaction', on_delete=models.CASCADE)
+    # pair_transaction = models.ForeignKey('inventory.InventoryTransaction', on_delete=models.CASCADE)
+    # location = models.ForeignKey('location.Location', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Inventory Transaction'
