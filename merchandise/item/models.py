@@ -15,6 +15,10 @@ class ItemDetails(models.Model):
     
     def __str__(self):
         return self.name
+    
+    @property
+    def sizes(self):
+        return self.item_set
 
 
 class Item(models.Model):
@@ -54,7 +58,7 @@ class Item(models.Model):
         verbose_name_plural = 'Items'
 
     def __str__(self):
-        return "{0} {1}".format(self.name, self.get_size_display())
+        return "{0} - {1}".format(self.name, self.get_size_display())
 
     @property
     def name(self):

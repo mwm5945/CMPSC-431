@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load merchandise_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Type</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.get_transaction_type_display }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Time</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.timestamp }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Customer</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.customer }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Employee</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ object.completed_by }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Total</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>${{ object.total }}</p>
+            </div>
+        </div>
+        <hr/>
+        <table class="table">
+            <thead>
+                <th>Item</th>
+                <th>Price</th>
+                <th>Status</th>
+            </thead>
+            <tbody>
+                {% for sale in object.sale_set.all %}
+                <tr>
+                    <td><a href="{% url 'sale:sale_detail' sale.id %}">{{ sale.item }}</a></td>
+                    <td>${{ sale.price }}</td>
+                    <td>{{ sale.get_status_display }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
