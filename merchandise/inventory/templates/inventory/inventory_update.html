@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <h5>Item: {{ item }}<br>
+            Location: {{ location }}</h5>
+        {% crispy form %}
+    </div>
+</div>
+{% endblock %}

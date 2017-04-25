@@ -8,12 +8,29 @@ from location.models import Location
 from item.models import Item
 from .models import Inventory
 
+class UpdateInventoryForm(Form):
+    """Create Schedule Form."""
+
+    quantity = IntegerField()
+
+    def __init__(self, *args, **kwargs):
+        """Initialization method for form"""
+        super(UpdateInventoryForm, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.layout = Layout(
+            'quantity',
+            ButtonHolder(
+                Submit('submit', 'Submit'),
+            )
+        )
+
+
 class CreateInventoryTransactionForm(Form):
     """Create Schedule Form."""
 
-    to_loc = ModelChoiceField(queryset=Location.objects.all())
-    from_loc = ModelChoiceField(queryset=Location.objects.all())
-    inventory = ModelChoiceField(queryset=Item.objects.all())
+    to_location = ModelChoiceField(queryset=Location.objects.all())
+    from_location = ModelChoiceField(queryset=Location.objects.all())
+    item = ModelChoiceField(queryset=Item.objects.all())
     quantity = IntegerField()
 
     def __init__(self, *args, **kwargs):
@@ -21,10 +38,10 @@ class CreateInventoryTransactionForm(Form):
         super(CreateInventoryTransactionForm, self).__init__(*args, **kwargs)
         self.helper = FormHelper()
         self.helper.layout = Layout(
-            'inventory',
+            'item',
             'quantity',
-            'from_loc',
-            'to_loc',
+            'from_location',
+            'to_location',
             ButtonHolder(
                 Submit('submit', 'Submit'),
             )
