@@ -13,6 +13,9 @@ class Inventory(models.Model):
         verbose_name = 'Inventory'
         verbose_name_plural = 'Inventories'
         unique_together = ('item', 'location')
+
+    def __str__(self):
+        return self.item.name + " " +  self.item.get()
         
 
 class InventoryTransaction(models.Model):
@@ -59,5 +62,8 @@ class InventoryTransaction(models.Model):
         
         add_to = InventoryTransaction.add_to_inventory(
                     item=item, location=to_location, quantity=quantity, user=user)
+
+        remove_from.pair_transaction = add_to
+        add_to.pair_transaction = remove_from
         
         return (remove_from, add_to)

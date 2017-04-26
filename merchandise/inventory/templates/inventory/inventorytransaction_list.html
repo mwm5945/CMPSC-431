@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Quantity</th>
+                <th>User</th>
+                <th>Timestamp</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in object_list %}
+            <tr>
+                <td><a href="{% url 'item:item_details_detail' transaction.inventory.item.id %}">{{ transaction.inventory.item.name }}</a></td>
+                <td>{{ transaction.inventory.location }}</td>
+                <td>{{ transaction.quantity }}</td>
+                <td>{{ transaction.user }}</td>
+                <td>{{ transaction.timestamp }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No Movements Found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block actions %}
+<a class="btn-floating btn-large green" href="{% url 'inventory:move' %}">
+    <i class="large material-icons">add</i>
+</a>
+{% endblock %}
