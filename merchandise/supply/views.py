@@ -14,6 +14,10 @@ class OrderListView(ListView):
         'page_header': "Orders"
     }
 
+    def get_queryset(self):
+        qs = super(OrderListView, self).get_queryset()
+        return qs.order_by('-timestamp')
+
     # Returns dictionary representing dictionary context... wut
     def get_context_data(self, **kwargs):
         context = super(OrderListView, self).get_context_data(**kwargs)

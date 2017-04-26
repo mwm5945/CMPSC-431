@@ -15,7 +15,7 @@ class Inventory(models.Model):
         unique_together = ('item', 'location')
 
     def __str__(self):
-        return self.item.name + " " +  self.item.get()
+        return str(self.item)
         
 
 class InventoryTransaction(models.Model):

@@ -106,10 +106,10 @@ class CreateInventoryTransaction(FormView):
 
     def form_valid(self, form):
         """Handle the valid form."""
-        item = form.cleaned_data['inventory']
+        item = form.cleaned_data['item']
         quantity = form.cleaned_data['quantity']
-        to_loc = form.cleaned_data['to_loc']
-        from_loc = form.cleaned_data['from_loc']
+        to_loc = form.cleaned_data['to_location']
+        from_loc = form.cleaned_data['from_location']
 
         InventoryTransaction.move_inventory(item, from_loc, to_loc, quantity, user=self.request.user)
 
@@ -122,6 +122,10 @@ class ListInventoryTransactions(ListView):
     params = {
         'page_header': "Inventory Movements"
     }
+
+    def get_queryset(self):
+        qs = super(ListInventoryTransactions, self).get_queryset()
+        return qs.order_by('-timestamp')
 
     def get_context_data(self, **kwargs):
         context = super(ListInventoryTransactions, self).get_context_data(**kwargs)
