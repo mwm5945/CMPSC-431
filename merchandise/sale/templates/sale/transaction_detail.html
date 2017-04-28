@@ -68,3 +68,9 @@
     </div>
 </div>
 {% endblock %}
+
+{% block actions %}
+<a class="btn-floating btn-large blue" href="{% url 'sale:transaction_receipt_detail' object.id %}">
+    <i class="large material-icons">email</i>
+</a>
+{% endblock %}

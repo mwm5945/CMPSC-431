@@ -3,6 +3,9 @@ from sale import views
 
 app_name = 'sale'
 urlpatterns = [
+    url(r'^transaction/receipt/(?P<pk>[-\w]+)/$', 
+        views.TransactionReceiptDetailView.as_view(), 
+        name='transaction_receipt_detail'),
     url(r'^transaction/(?P<pk>[-\w]+)/$', 
         views.TransactionDetailView.as_view(), 
         name='transaction_detail'),

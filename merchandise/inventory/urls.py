@@ -4,6 +4,9 @@ from inventory import views
 
 app_name = 'inventory'
 urlpatterns = [
+    url(r'^report/$',
+        views.InventoryReport.as_view(),
+        name='inventory_report'),
     url(r'^create/$',
         views.CreateInventory.as_view(),
         name='inventory_create'),

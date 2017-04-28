@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from sale.models import Transaction
+
 
 class Address(models.Model):
     """Address."""
@@ -35,6 +37,15 @@ class Customer(models.Model):
 
     def __str__(self):
         return self.email
+
+    @property
+    def sale_total(self):
+        total = 0
+
+        for trans in self.transaction_set.all():
+            total += trans.total
+        
+        return total
 
 
 class Supplier(models.Model):

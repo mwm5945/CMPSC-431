@@ -1,14 +1,18 @@
-from crispy_forms.helper import FormHelper
-from crispy_forms.layout import Submit
+from django.db import models
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
-
-# Create your views here.
 from django.urls import reverse, reverse_lazy
-from django.views.generic import CreateView, ListView, UpdateView, FormView
+from django.views.generic import CreateView, ListView, UpdateView, FormView, View
+
+from crispy_forms.helper import FormHelper
+from crispy_forms.layout import Submit
+
+from datetime import datetime, timedelta
 
 from .models import Inventory, InventoryTransaction
 from .forms import CreateInventoryTransactionForm, UpdateInventoryForm
+from sale.models import Transaction, Sale
+from item.models import Item
 
 
 class CreateInventory(CreateView):
@@ -131,3 +135,36 @@ class ListInventoryTransactions(ListView):
         context = super(ListInventoryTransactions, self).get_context_data(**kwargs)
         context.update(self.params)
         return context
+
+
+class InventoryReport(View):
+    """View for the inventory report."""
+    params = {
+        'page_header': "Inventory & Sale Report"
+    }
+
+    def get(self, request, *args, **kwargs):
+        # Get transactions in the past week
+        one_week_ago = datetime.now() - timedelta(days=7)
+        transactions = Transaction.objects.filter(timestamp__gt=one_week_ago)
+        sales = Sale.objects.filter(transaction__timestamp__gt=one_week_ago)
+
+        self.params['transactions'] = transactions
+        self.params['total'] = int(sales.aggregate(models.Sum('price'))['price__sum'])
+
+        # Get a list of the top items
+        top_is = sales.values_list('item').annotate(item_count=models.Count('item')).order_by('-item_count')
+        top_items = []
+        for ti in top_is:
+            top_items.append([Item.objects.get(id=ti[0]), ti[1]])
+        self.params['top_items'] = top_items
+
+        # Lowest Inventories
+        lowest = Inventory.objects.values_list('item').annotate(in_inventory=models.Sum('quantity')).order_by('in_inventory')
+        lowest_items = []
+        for li in lowest:
+            lowest_items.append([Item.objects.get(id=li[0]), li[1]])
+        self.params['lowest_items'] = lowest_items
+        
+        
+        return render(request, "inventory/inventory_report.html", self.params)

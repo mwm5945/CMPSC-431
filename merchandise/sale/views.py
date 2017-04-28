@@ -125,7 +125,7 @@ class TransactionCreateView(FormView):
 
 
 class TransactionDetailView(DetailView):
-    """Detail View for ItemDetails."""
+    """Detail View for Transaction."""
 
     model = Transaction
     params = {
@@ -138,8 +138,23 @@ class TransactionDetailView(DetailView):
         return context
 
 
-class SaleDetailView(DetailView):    
+class TransactionReceiptDetailView(DetailView):
     """Detail View for ItemDetails."""
+
+    model = Transaction
+    template_name = "sale/transaction_receipt_detail.html"
+    params = {
+        'page_header': "Transaction"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(TransactionReceiptDetailView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+
+class SaleDetailView(DetailView):    
+    """Detail View for Sale."""
 
     model = Sale
     params = {}
