@@ -5,7 +5,8 @@ from django.utils import timezone
 from django.views.generic import CreateView, ListView, TemplateView, UpdateView, DetailView
 
 from .models import Location
-from .forms import LocationForm
+from directory.models import Address
+from .forms import LocationForm, AddressForm
 
 
 class LocationListView(ListView):
@@ -71,3 +72,24 @@ class LocationUpdateView(UpdateView):
 
     def get_success_url(self):
         return reverse('location:location_detail', kwargs={'pk':self.object.id})
+
+
+class AddressCreateView(CreateView):
+    """Create Address for Location."""
+
+    model = Address
+    form_class = AddressForm
+    template_name = 'address/address_form.html'
+    params = {
+        'page_header': "Create Address for Location"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressCreateView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context
+
+    def get_success_url(self):
+        """Return user to creation of location"""
+
+        return reverse('location:location_create')
