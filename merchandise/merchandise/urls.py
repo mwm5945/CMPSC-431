@@ -31,6 +31,9 @@ router.register(r'categories', item_viewsets.ItemCategoryViewSet)
 urlpatterns = [
     url(r'^api/',
         include(router.urls)),
+    url(r'^directory/',
+        include('directory.urls',
+                namespace='directory')),
     url(r'^item/',
         include('item.urls',
                 namespace='item')),

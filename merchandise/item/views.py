@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView, TemplateView
 from django.urls import reverse
 from item.forms import ItemForm, ItemSearchForm
 from item.models import ItemDetails, Item
@@ -147,3 +147,16 @@ class ItemUpdateView(UpdateView):
     
     def get_success_url(self):
         return reverse('item:item_details_detail', kwargs={'pk':self.object.details.id})
+
+
+class ItemTemplateView(TemplateView):
+
+    template_name = "item/test.html"
+    params = {
+        'page_header': "Items"
+    }
+
+    def get_context_data(self, **kwargs):
+        context = super(ItemTemplateView, self).get_context_data(**kwargs)
+        context.update(self.params)
+        return context

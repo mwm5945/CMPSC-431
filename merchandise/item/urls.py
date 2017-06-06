@@ -7,6 +7,9 @@ urlpatterns = [
     url(r'^create/$', 
         views.ItemDetailsCreateView.as_view(), 
         name='item_details_create'),
+    url(r'^test/$', 
+        views.ItemTemplateView.as_view(), 
+        name='item_test'),
     url(r'^list/$', 
         views.ItemDetailsListView.as_view(), 
         name='item_details_list'),
@@ -23,6 +26,6 @@ urlpatterns = [
         views.ItemCreateView.as_view(), 
         name='item_create'),
     url(r'^$',
-        views.ItemDetailsView.as_view(),
+        views.ItemTemplateView.as_view(),
         name='item_details'),
 ]

@@ -1,4 +1,6 @@
 from django.db import models
+from math import ceil
+from sale.models import Sale
 
 
 class ItemDetails(models.Model):
@@ -75,6 +77,20 @@ class Item(models.Model):
     @property
     def is_active(self):
         return self.details.is_active
+    
+    @property
+    def popularity(self):
+        items = Item.objects.all()
+        sale_counts = []
+        sale_count = self.sale_set.all().count()
+
+        for i in items:
+            sale_counts.append(i.sale_set.all().count())
+        
+        sale_counts = sorted(sale_counts)
+        index = sale_counts.index(sale_count)
+        pop = ceil(index/len(sale_counts) * 5)
+        return pop
 
 
 class ItemCategory(models.Model):

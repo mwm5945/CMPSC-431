@@ -1,0 +1,58 @@
+{% extends 'base-no-nav.html' %}
+{% load staticfiles %}
+{% load merchandise_tags %}
+
+{% block css %}
+<link href="{% static 'sale/css/transaction_receipt_detail.css' %}" rel="stylesheet">
+{% endblock %}
+
+{% block main %}   
+<div id="main-content" class="container-fluid">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+                <div id="receipt-body" class="panel-body">
+                    <div class="row">
+                        <p class="text-center"><img src="{% static 'img/thon-store.png' %}" width="600px" /></p>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <h2 class="text-center">Receipt</h2>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><b>Date</b></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ object.timestamp }}</p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><b>Total</b></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>${{ object.total }}</p>
+                        </div>
+                    </div>
+                    <hr/>
+                    <table class="table">
+                        <tbody>
+                            {% for sale in object.sale_set.all %}
+                            <tr>
+                                <td>{{ sale.item }}</td>
+                                <td>${{ sale.price }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+</div>
+{% endblock %}

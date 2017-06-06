@@ -37,10 +37,6 @@ class ListScheduleView(ListView):
         'page_header': "User Schedules"
     }
 
-    def get_queryset(self):
-        qs = super(ListScheduleView, self).get_queryset()
-        return qs.filter(start_time__gt=timezone.now()).order_by('start_time')
-
     def get_context_data(self, **kwargs):
         """Returns context for the."""
         context = super(ListScheduleView, self).get_context_data(**kwargs)
