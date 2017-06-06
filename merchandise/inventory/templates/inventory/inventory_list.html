@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Quantity</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in object_list %}
+            <tr>
+                <td><a href="{% url 'item:item_details_detail' item.item.id %}">{{ item.item }}</a></td>
+                <td>{{ item.location }}</td>
+                <td>{{ item.quantity }}</td>
+                <td><a href="{% url 'inventory:inventory_update' item.id %}">Update</a></td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="3">No Items Found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
+{% block actions %}
+<a class="btn-floating btn-large floating-btn-blue">
+            <i class="large material-icons">more_vert</i></a>
+        <ul>
+            <li><a class="btn-floating blue darken-2" href="{% url 'inventory:inventory_create' %}"
+                   data-toggle="tooltip" data-placement="left" title="" data-original-title="Create Inventory"><i
+                    class="material-icons">local_offer</i></a></li>
+            <li><a class="btn-floating green darken-1" href="{% url 'location:locations' %}"
+                   data-toggle="tooltip" data-placement="left" title="" data-original-title="Manage Locations"><i
+                    class="material-icons">place</i></a></li>
+            <li><a class="btn-floating orange darken-1"
+                   href="{% url 'inventory:list_moves' %}" data-toggle="tooltip"
+                   data-placement="left" title="" data-original-title="Manage Movements"><i class="material-icons">local_shipping</i></a>
+            </li>
+        </ul>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% load crispy_forms_field %}
+
+<div class="row">
+{% if field.is_hidden %}
+    {{ field }}
+{% else %}
+    <div class="input-field col-xs-12 {{ field_class }}{% if form_show_errors and field.errors %} has-error{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}" id="div_{{ field.auto_id }}">
+
+{#        <div class="controls ">#}
+{#    <div  class="">#}
+            {% if field|is_select %}
+                {% if crispy_prepended_text %}<span class="input-group{% if active %} active{% endif %}{% if input_size %} {{ input_size }}{% endif %}">{{ crispy_prepended_text|safe }}</span>{% endif %}
+                {% crispy_field field %}
+                {% if crispy_appended_text %}<span class="input-group{% if active %} active{% endif %}{% if input_size %} {{ input_size }}{% endif %}">{{ crispy_appended_text|safe }}</span>{% endif %}
+            {% else %}
+
+                {% if crispy_prepended_text %}
+                  <span class="prefix">{{ crispy_prepended_text|safe }}</span>
+                {% endif %}
+                  {% crispy_field field %}
+                {% if crispy_appended_text %}
+                  {{ crispy_appended_text|safe }}
+                {% endif %}
+                  {% if field.label and form_show_labels %}
+                    <label for="{{ field.id_for_label }}" class="control-label {{ label_class }}{% if field.field.required %} requiredField{% endif %}">
+                        {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+                    </label>
+                  {% endif %}
+{#                </div>#}
+          {% endif %}
+            {% include 'bootstrap3-material/layout/help_text_and_errors.html' %}
+        </div>
+{#    </div>#}
+{% endif %}
+</div>

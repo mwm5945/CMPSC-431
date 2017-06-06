@@ -3,13 +3,7 @@
 
 {% block content %}
 <div class="row">
-    <div class="col-md-6 text-center form-group">
-        <img src="http://placehold.it/350x350">
-    </div>
-</div>
-<div class="row">
     <div class="col-md-6">
-        <hr/>
         <div class="row">
             <div class="col-md-6">
                 <p><b>Category</b></p>
@@ -33,13 +27,15 @@
                 <th>Size</th>
                 <th>Price</th>
                 <th>SKU</th>
+                <th>Popularity</th>
             </thead>
             <tbody>
                 {% for item in object.item_set.all %}
                 <tr>
-                    <td>{{ item.size }}</td>
+                    <td><a href="{% url 'item:item_update' item.id %}">{{ item.size }}</a></td>
                     <td>${{ item.price }}</td>
                     <td>{{ item.sku }}</td>
+                    <td>{{ item.popularity|five_stars }}</td>
                 </tr>
                 {% empty %}
                     <td colspan="3">No Sizes Found</td>
@@ -51,7 +47,10 @@
 {% endblock %}
 
 {% block actions %}
-<a class="btn-floating btn-large red">
+<a class="btn-floating btn-large red" href="{% url 'item:item_details_update' object.id %}">
     <i class="large material-icons">create</i>
 </a>
+<ul>
+    <li><a class="btn-floating green" href="{% url 'item:item_create' object.id %}"><i class="material-icons">add</i></a></li>
+</ul>
 {% endblock %}

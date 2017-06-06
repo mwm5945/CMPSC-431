@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
+from sale.models import Transaction
+
 
 class Address(models.Model):
     """Address."""
@@ -33,6 +35,18 @@ class Customer(models.Model):
         verbose_name = 'Customer'
         verbose_name_plural = 'Customers'
 
+    def __str__(self):
+        return self.email
+
+    @property
+    def sale_total(self):
+        total = 0
+
+        for trans in self.transaction_set.all():
+            total += trans.total
+        
+        return total
+
 
 class Supplier(models.Model):
     """Merchandise supplier."""
@@ -46,6 +60,9 @@ class Supplier(models.Model):
         verbose_name = 'Supplier'
         verbose_name_plural = 'Suppliers'
 
+    def __str__(self):
+        return self.name
+
 
 class MerchandiseUser(AbstractUser):
     """Merchandise user."""
@@ -57,3 +74,6 @@ class MerchandiseUser(AbstractUser):
     @property
     def name(self):
         return "{} {}".format(self.first_name, self.last_name)
+
+    def __str__(self):
+        return self.name

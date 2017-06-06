@@ -1,0 +1,61 @@
+{% load crispy_forms_field %}
+
+<div class="row">
+{% if field.is_hidden %}
+    {{ field }}
+{% else %}
+    {% if field|is_checkbox %}
+{#        <div class="form-group">#}
+        {% if label_class %}
+            <div class="controls col-{{ bootstrap_device_type }}-offset-{{ label_size }} {{ field_class }}">
+        {% endif %}
+    {% endif %}
+    <{% if tag %}{{ tag }}{% else %}div{% endif %} id="div_{{ field.auto_id }}" class="{% if not field|is_radioselect and not field|is_select %}input-field{% endif %}{% if field|is_select %}custom-select-wrapper{% endif %} col-xs-12{% if field|is_file %} file-field{% endif %}{% if wrapper_class %} {{ wrapper_class }}{% endif %}{% if form_show_errors%}{% if field.errors %} has-error{% endif %}{% endif %}{% if field.css_classes %} {{ field.css_classes }}{% endif %}">
+
+        {% if field|is_checkboxselectmultiple %}
+            {% include 'bootstrap3-material/layout/checkboxselectmultiple.html' %}
+        {% endif %}
+
+        {% if field|is_radioselect %}
+            {% include 'bootstrap3-material/layout/radioselect.html' %}
+        {% endif %}
+
+        {% if field|is_file %}
+            {% include 'bootstrap3-material/layout/clearablefileinput.html' %}
+        {% endif %}
+
+        {% if not field|is_checkboxselectmultiple and not field|is_radioselect and not field|is_file %}
+            {% if field|is_checkbox and form_show_labels %}
+                {% crispy_field field %}
+                {% include 'bootstrap3-material/layout/help_text_and_errors.html' %}
+                <label for="{{ field.id_for_label }}" class="{% if field.field.required %} requiredField{% endif %}">
+                {{ field.label|safe }}
+                </label>
+            {% elif field|is_checkbox and is_formset %}
+                {% crispy_field field %}
+                {% include 'bootstrap3-material/layout/help_text_and_errors.html' %}
+                <label for="{{ field.id_for_label }}" class="{% if field.field.required %} requiredField{% endif %}">
+                {{ field.label|safe }}
+                </label>
+            {% else %}
+                <div class="{{ field_class }}">
+                    {% if field.label and not field|is_checkbox and form_show_labels %}
+                      <label for="{{ field.id_for_label }}" class="
+                          {{ label_class }}{% if field.field.required %} requiredField{% endif %}">
+                        {{ field.label|safe }}{% if field.field.required %}<span class="asteriskField">*</span>{% endif %}
+                      </label>
+                    {% endif %}
+                      {% crispy_field field %}
+                    {% include 'bootstrap3-material/layout/help_text_and_errors.html' %}
+                </div>
+            {% endif %}
+        {% endif %}
+    </{% if tag %}{{ tag }}{% else %}div{% endif %}>
+    {% if field|is_checkbox %}
+        {% if label_class %}
+            </div>
+        {% endif %}
+{#        </div>#}
+    {% endif %}
+{% endif %}
+</div>

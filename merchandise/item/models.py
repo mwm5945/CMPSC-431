@@ -1,4 +1,6 @@
 from django.db import models
+from math import ceil
+from sale.models import Sale
 
 
 class ItemDetails(models.Model):
@@ -15,6 +17,10 @@ class ItemDetails(models.Model):
     
     def __str__(self):
         return self.name
+    
+    @property
+    def sizes(self):
+        return self.item_set
 
 
 class Item(models.Model):
@@ -54,7 +60,7 @@ class Item(models.Model):
         verbose_name_plural = 'Items'
 
     def __str__(self):
-        return "{0} {1}".format(self.name, self.get_size_display())
+        return "{0} - {1}".format(self.name, self.get_size_display())
 
     @property
     def name(self):
@@ -71,6 +77,20 @@ class Item(models.Model):
     @property
     def is_active(self):
         return self.details.is_active
+    
+    @property
+    def popularity(self):
+        items = Item.objects.all()
+        sale_counts = []
+        sale_count = self.sale_set.all().count()
+
+        for i in items:
+            sale_counts.append(i.sale_set.all().count())
+        
+        sale_counts = sorted(sale_counts)
+        index = sale_counts.index(sale_count)
+        pop = ceil(index/len(sale_counts) * 5)
+        return pop
 
 
 class ItemCategory(models.Model):

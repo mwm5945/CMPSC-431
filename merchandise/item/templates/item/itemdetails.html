@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block scripts %}
+<script type="text/javascript" src="{% static 'js/itemdetails.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-3 col-md-push-9">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <h4>Search</h4>
+                {% crispy form %}
+            </div>
+        </div>
+    </div>    
+    <div id="items" class="col-md-9 col-md-pull-3">
+    </div>
+</div>
+{% endblock %}
+
+{% block actions %}
+<a class="btn-floating btn-large green" href="{% url 'item:item_details_create' %}">
+    <i class="large material-icons">add</i>
+</a>
+{% endblock %}

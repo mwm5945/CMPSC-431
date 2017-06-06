@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="panel-body">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>Employee</th>
+                    <th>Location</th>
+                    <th>Starting Time</th>
+                    <th>Ending Time</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for shift in object_list %}
+                    <tr>
+                        <td>{{ shift.scheduled_employee.name }}</td>
+                        <td>{{ shift.location.name }}</td>
+                        <td>{{ shift.start_time|date:"m/d/Y, P" }}</td>
+                        <td>{{ shift.end_time|date:"m/d/Y, P" }}</td>
+                        <td><a href="{% url 'users:update_schedule' pk=shift.id %}"/>Update</td>
+                        <td><a href="{% url 'users:delete_schedule' pk=shift.id %}"/>Delete</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+{% endblock %}
+{% block actions %}
+<a class="btn-floating btn-large green" href="{% url 'users:create_schedule' %}">
+    <i class="large material-icons">add</i>
+</a>
+{% endblock %}

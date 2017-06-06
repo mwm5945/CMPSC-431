@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-6">
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Status</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.get_status_display }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Timestamp</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.timestamp }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Entered By</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.entered_by }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Last Updated</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.last_updated }}</p>
+            </div>
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-md-6">
+                <p><b>Last Updated By</b></p>
+            </div>
+            <div class="col-md-6">
+                <p>{{ order.last_updated_by }}</p>
+            </div>
+        </div>
+        <hr/>
+    </div>
+</div>
+{% endblock %}
+
+{% block actions %}
+<a class="btn-floating btn-large red" href="{% url 'supply:order_update' object.id %}">
+    <i class="large material-icons">create</i>
+</a>
+{% endblock %}
